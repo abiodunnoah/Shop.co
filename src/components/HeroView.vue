@@ -1,7 +1,7 @@
 <script setup>
 import StarIconSmall from "@/assets/icons/StarIconSmall.png";
 import StarIconBig from "@/assets/icons/StarIconBig.png";
-import HeaderImage from "@/assets/icons/Image.jpg";
+import HeaderImage from "@/assets/images/Image.jpg";
 </script>
 
 <template>
@@ -9,7 +9,7 @@ import HeaderImage from "@/assets/icons/Image.jpg";
     <div class="hero__content">
       <!-- Left column -->
       <div class="hero__text">
-        <h1>FIND CLOTHES THAT MATCH YOUR STYLE</h1>
+        <h1>FIND CLOTHES THAT MATCHES YOUR STYLE</h1>
         <p>
           Browse through our diverse range of meticulously crafted garments, designed to bring out
           your individuality and cater to your sense of style.
@@ -50,6 +50,7 @@ import HeaderImage from "@/assets/icons/Image.jpg";
   padding: 0 40px;
   display: flex;
   justify-content: center;
+  /* height: 663px; */
 }
 
 .hero__content {
@@ -57,43 +58,56 @@ import HeaderImage from "@/assets/icons/Image.jpg";
   align-items: center;
   max-width: 1440px;
   width: 100%;
-  min-height: 663px;
+  min-height: 500px;
 }
 
 /* Left column */
 .hero__text {
   flex: 1;
-  max-width: 600px;
+  max-width: 663px;
 }
 
 .hero__text h1 {
-  font-size: 3rem;
   margin-bottom: 1rem;
+  font-size: 50px;
+  font-family: sans-serif;
+  font-weight: 900;
+  line-height: 60px;
 }
 
 .hero__text p {
   margin-bottom: 1.5rem;
   line-height: 1.5;
   color: #555;
+  font-size: 16px;
 }
 
 .btn {
   background: #000;
   color: #fff;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 3rem;
   border: none;
-  border-radius: 9999px;
+  border-radius: 99px;
   cursor: pointer;
   margin-bottom: 2rem;
 }
 
 .hero__stats {
   display: flex;
-  gap: 2rem;
+  /* gap: 4rem; */
+}
+
+.stat {
+  padding: 0 1.5rem;
+}
+
+.stat + .stat {
+  border-left: 1px solid #0000001a;
 }
 
 .stat h2 {
   font-size: 2rem;
+  font-weight: 700;
   margin: 0;
 }
 
@@ -121,16 +135,16 @@ import HeaderImage from "@/assets/icons/Image.jpg";
 }
 
 .star--small {
-  top: 20%;
-  right: 30%;
-  width: 50px;
-  height: 50px;
+  top: 35%;
+  right: 77%;
+  width: 45px;
+  height: 45px;
 }
 
 .star--big {
-  bottom: 15%;
-  right: 10%;
-  width: 80px;
-  height: 80px;
+  top: 15%;
+  right: 15%;
+  width: 75px;
+  height: 75px;
 }
 </style>
