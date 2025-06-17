@@ -42,6 +42,7 @@ import gym from "@/assets/images/gym.png";
   padding: 3rem;
   max-width: 1200px;
   margin: auto;
+  margin-bottom: 2rem;
 }
 
 .title {

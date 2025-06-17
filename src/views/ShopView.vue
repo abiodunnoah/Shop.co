@@ -5,6 +5,7 @@ import HeroView from "@/components/HeroView.vue";
 import BrandView from "@/components/BrandView.vue";
 import NewArrivalsView from "@/components/NewArrivalsView.vue";
 import BrowsePanel from "@/components/BrowsePanel.vue";
+import CustomerReview from "@/components/CustomerReview.vue";
 </script>
 
 <template>
@@ -31,6 +32,10 @@ import BrowsePanel from "@/components/BrowsePanel.vue";
 
     <div>
       <BrowsePanel />
+    </div>
+
+    <div>
+      <CustomerReview />
     </div>
   </main>
 </template>
