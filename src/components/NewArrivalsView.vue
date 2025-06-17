@@ -7,10 +7,6 @@ import cloth5 from "@/assets/images/cloth 5.png";
 import cloth6 from "@/assets/images/cloth 6.png";
 import cloth7 from "@/assets/images/cloth 7.png";
 import cloth8 from "@/assets/images/cloth 8.png";
-import casual from "@/assets/images/casual.png";
-import formal from "@/assets/images/formal.png";
-import party from "@/assets/images/party.png";
-import gym from "@/assets/images/gym.png";
 </script>
 
 <template>
@@ -18,7 +14,7 @@ import gym from "@/assets/images/gym.png";
     <h2 class="section-title">NEW ARRIVALS</h2>
     <div class="grid">
       <!-- Item 1 -->
-      <div class="card">
+      <div class="card__item">
         <img :src="cloth1" alt="T-shirt with Tape Details" class="card__image" />
         <h3 class="card__name">T-shirt with Tape Details</h3>
 
@@ -36,7 +32,7 @@ import gym from "@/assets/images/gym.png";
       </div>
 
       <!-- Item 2 -->
-      <div class="card">
+      <div class="card__item">
         <img :src="cloth2" alt="Skinny Fit Jeans" class="card__image" />
         <h3 class="card__name">Skinny Fit Jeans</h3>
 
@@ -55,7 +51,7 @@ import gym from "@/assets/images/gym.png";
       </div>
 
       <!-- Item 3 -->
-      <div class="card">
+      <div class="card__item">
         <img :src="cloth3" alt="Checkered Shirt" class="card__image" />
         <h3 class="card__name">Checkered Shirt</h3>
 
@@ -72,7 +68,7 @@ import gym from "@/assets/images/gym.png";
       </div>
 
       <!-- Item 4 -->
-      <div class="card">
+      <div class="card__item">
         <img :src="cloth4" alt="Sleeve Striped T-shirt" class="card__image" />
         <h3 class="card__name">Sleeve Striped T-shirt</h3>
 
@@ -101,7 +97,7 @@ import gym from "@/assets/images/gym.png";
     <h2 class="section-title">TOP SELLING</h2>
     <div class="grid">
       <!-- Item 1 -->
-      <div class="card">
+      <div class="card__item">
         <img :src="cloth5" alt="Vertical Stripped Shirt" class="card__image" />
         <h3 class="card__name">Vertical Stripped Shirt</h3>
 
@@ -120,7 +116,7 @@ import gym from "@/assets/images/gym.png";
       </div>
 
       <!-- Item 2 -->
-      <div class="card">
+      <div class="card__item">
         <img :src="cloth6" alt="Courage Graphic T-shirt" class="card__image" />
         <h3 class="card__name">Courage Graphic T-shirt</h3>
 
@@ -137,7 +133,7 @@ import gym from "@/assets/images/gym.png";
       </div>
 
       <!-- Item 3 -->
-      <div class="card">
+      <div class="card__item">
         <img :src="cloth7" alt="Loose Fit Bermuda Shorts" class="card__image" />
         <h3 class="card__name">Loose Fit Bermuda Shorts</h3>
 
@@ -152,7 +148,7 @@ import gym from "@/assets/images/gym.png";
       </div>
 
       <!-- Item 4 -->
-      <div class="card">
+      <div class="card__item">
         <img :src="cloth8" alt="Faded Skinny Jeans" class="card__image" />
         <h3 class="card__name">Faded Skinny Jeans</h3>
 
@@ -171,31 +167,6 @@ import gym from "@/assets/images/gym.png";
 
     <div class="view-all-wrapper">
       <button class="btn-outline">View All</button>
-    </div>
-  </section>
-
-  <section class="browse-panel-container">
-    <div class="browse-panel">
-      <h2 class="browse-panel__title">BROWSE BY DRESS STYLE</h2>
-
-      <div class="browse-panel__grid">
-        <div class="card">
-          <span class="card__label">Casual</span>
-          <img :src="casual" alt="Casual style" class="card__img" />
-        </div>
-        <div class="card">
-          <span class="card__label">Formal</span>
-          <img :src="formal" alt="Formal style" class="card__img" />
-        </div>
-        <div class="card">
-          <span class="card__label">Party</span>
-          <img :src="party" alt="Party style" class="card__img" />
-        </div>
-        <div class="card">
-          <span class="card__label">Gym</span>
-          <img :src="gym" alt="Gym style" class="card__img" />
-        </div>
-      </div>
     </div>
   </section>
 </template>
@@ -225,7 +196,7 @@ import gym from "@/assets/images/gym.png";
   /* gap: 1.25rem; */
 }
 
-.card {
+.card__item {
   /* background: #f7f6f6; */
   border-radius: 1rem;
   padding: 0.75rem;
@@ -320,55 +291,5 @@ import gym from "@/assets/images/gym.png";
   border-radius: 9999px;
   cursor: pointer;
   font-weight: 600;
-}
-
-.browse-panel-container {
-  margin: 4rem 2rem;
-}
-
-.browse-panel {
-  background: #f2f0f1;
-  border-radius: 1rem;
-  padding: 2rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.browse-panel__title {
-  text-align: center;
-  font-size: 48px;
-  font-weight: 900;
-  font-family: sans-serif;
-  margin-bottom: 1.5rem;
-}
-
-.browse-panel__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-
-.card {
-  position: relative;
-  background: #ffffff;
-  border-radius: 0.75rem;
-  overflow: hidden;
-}
-
-.card__label {
-  position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #000;
-  z-index: 1;
-}
-
-.card__img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
 }
 </style>

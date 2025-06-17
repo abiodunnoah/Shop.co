@@ -4,6 +4,7 @@ import NavBar from "@/components/NavBar.vue";
 import HeroView from "@/components/HeroView.vue";
 import BrandView from "@/components/BrandView.vue";
 import NewArrivalsView from "@/components/NewArrivalsView.vue";
+import BrowsePanel from "@/components/BrowsePanel.vue";
 </script>
 
 <template>
@@ -26,6 +27,10 @@ import NewArrivalsView from "@/components/NewArrivalsView.vue";
 
     <div>
       <NewArrivalsView />
+    </div>
+
+    <div>
+      <BrowsePanel />
     </div>
   </main>
 </template>
