@@ -17,7 +17,7 @@ function scrollRight() {
   <section class="px-10 py-10 m">
     <!-- Header with title and arrows -->
     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-5xl font-extrabold">OUR HAPPY CUSTOMERS</h2>
+      <h2 class="text-6xl font-black">OUR HAPPY CUSTOMERS</h2>
       <div class="space-x-4">
         <button @click="scrollLeft" aria-label="Previous">
           <img src="~@/assets/icons/PrevArrow.png" alt="←" class="w-6 h-6" />

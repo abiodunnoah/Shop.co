@@ -147,4 +147,12 @@ import HeaderImage from "@/assets/images/Image.jpg";
   width: 75px;
   height: 75px;
 }
+
+@media (max-width: 767px) {
+  .hero__content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
 </style>

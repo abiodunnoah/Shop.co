@@ -17,7 +17,8 @@ import CancelButton from "@/assets/icons/cancelButton.png";
 .container {
   background: #000000;
   color: #ffffff;
-  max-width: 1440px;
+  /* max-width: 1440px; */
+  width: 100%;
   height: 34px;
 }
 
@@ -26,7 +27,6 @@ import CancelButton from "@/assets/icons/cancelButton.png";
   color: #fff;
   height: 3rem;
   line-height: 3rem;
-  /* font-family: integ; */
 }
 
 .signup-text {
@@ -57,5 +57,19 @@ span {
   color: #fff;
   font-size: 1.25rem;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .cancel-button {
+    display: none;
+  }
+
+  .signup-text {
+    font-size: 10px;
+  }
+
+  .container-wrapper {
+    text-align: center;
+  }
 }
 </style>

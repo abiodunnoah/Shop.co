@@ -6,6 +6,7 @@ import BrandView from "@/components/BrandView.vue";
 import NewArrivalsView from "@/components/NewArrivalsView.vue";
 import BrowsePanel from "@/components/BrowsePanel.vue";
 import CustomerReview from "@/components/CustomerReview.vue";
+import FooterView from "@/components/FooterView.vue";
 </script>
 
 <template>
@@ -36,6 +37,10 @@ import CustomerReview from "@/components/CustomerReview.vue";
 
     <div>
       <CustomerReview />
+    </div>
+
+    <div>
+      <FooterView />
     </div>
   </main>
 </template>
