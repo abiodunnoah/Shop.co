@@ -14,7 +14,7 @@ import HeaderImage from "@/assets/images/Image.jpg";
           Browse through our diverse range of meticulously crafted garments, designed to bring out
           your individuality and cater to your sense of style.
         </p>
-        <button class="btn">Shop Now</button>
+        <div class="button"><button class="btn">Shop Now</button></div>
 
         <div class="hero__stats">
           <div class="stat">
@@ -149,10 +149,96 @@ import HeaderImage from "@/assets/images/Image.jpg";
 }
 
 @media (max-width: 767px) {
+  .hero {
+    padding: 0 13px;
+  }
+
   .hero__content {
     flex-direction: column;
     align-items: center;
+    padding-top: 20px;
+  }
+
+  .hero__text {
+    width: 100%;
+  }
+
+  .hero__text h1 {
+    margin-bottom: 0.5rem;
+    font-size: 35px;
+    line-height: 35px;
+  }
+
+  .hero__text p {
+    font-size: 13px;
+  }
+
+  .hero__image {
+    max-height: 350px;
+  }
+
+  .btn {
+    padding: 0.75rem 6.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .button {
     text-align: center;
+  }
+
+  .hero__stats {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .hero__stats .stat {
+    padding: 0.5rem 0;
+    text-align: center;
+  }
+
+  .hero__stats .stat + .stat {
+    border-left: none;
+  }
+
+  .hero__stats .stat:nth-child(3) {
+    grid-column: 1 / -1;
+    margin-top: 0.5rem;
+  }
+  .hero__image-wrapper {
+    position: relative;
+    background: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+    width: 100%;
+    max-width: 320px;
+    height: 320px;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero__image {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .star--small {
+    top: 30%;
+    right: 80%;
+    width: 40px;
+    height: 40px;
+  }
+
+  .star--big {
+    top: 12%;
+    right: 5%;
+    width: 60px;
+    height: 60px;
   }
 }
 </style>

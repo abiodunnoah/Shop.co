@@ -142,17 +142,27 @@ h1 {
   }
 
   .nav {
-    margin: 0 5px; /* was 0 25px, now 0 10px on mobile */
+    margin: 0 0; /* was 0 25px, now 0 10px on mobile */
   }
 
   .hamburger-btn {
     margin-right: 20px; /* was 0.5rem, now 0.5rem on mobile */
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 25px;
   }
 
   .nav h1 {
-    font-size: 17px;
+    font-size: 20px;
+  }
+
+  .cart__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .avatar__icon {
+    width: 20px;
+    height: 20px;
   }
 }
 </style>

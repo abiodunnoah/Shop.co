@@ -33,8 +33,8 @@ import Calvin from "@/assets/images/calvin.png";
 }
 
 .versace-logo {
-  width: 166.48175048828125px;
-  height: 33.16448211669922px;
+  width: 167px;
+  height: 34px;
   object-fit: contain;
   transition: transform 0.3s ease;
 }
@@ -62,5 +62,44 @@ import Calvin from "@/assets/images/calvin.png";
   height: 33px;
   object-fit: contain;
   transition: transform 0.3s ease;
+}
+
+@media (max-width: 767px) {
+  .brand-container {
+    height: 100%;
+  }
+
+  .brand-container-wrapper {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 2rem 1rem;
+  }
+
+  .versace-logo {
+    width: 116px;
+    height: 23px;
+    margin-right: 8px;
+  }
+
+  .zara-logo {
+    width: 64px;
+    height: 27px;
+    margin-right: 10px;
+  }
+
+  .gucci-logo {
+    width: 109px;
+    height: 23px;
+  }
+
+  .prada-logo {
+    width: 127px;
+    height: 20px;
+  }
+
+  .calvin-logo {
+    width: 134px;
+    height: 21px;
+  }
 }
 </style>
