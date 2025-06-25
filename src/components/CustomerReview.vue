@@ -16,9 +16,9 @@ function scrollRight() {
 <template>
   <section class="px-10 py-10 m">
     <!-- Header with title and arrows -->
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-6xl font-black">OUR HAPPY CUSTOMERS</h2>
-      <div class="space-x-4">
+    <div class="flex items-end justify-between gap-2 mb-6">
+      <h2 class="section-title">OUR HAPPY CUSTOMERS</h2>
+      <div class="space-x-4 flex-shrink-0">
         <button @click="scrollLeft" aria-label="Previous">
           <img src="~@/assets/icons/PrevArrow.png" alt="←" class="w-6 h-6" />
         </button>
@@ -83,5 +83,60 @@ function scrollRight() {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.section-title {
+  font-size: 40px;
+  font-weight: 900;
+}
+
+@media (max-width: 767px) {
+  /* 1) Shrink the section title */
+  .section-title {
+    font-size: 1.45rem;
+    line-height: 1.2;
+    flex: 1 1 auto;
+    white-space: normal;
+    margin: 0;
+  }
+
+  /* 2) Buttons remain aligned at bottom */
+  .space-x-4 {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .space-x-4 > button {
+    padding: 0.25rem;
+  }
+
+  .space-x-4 > button img {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  /* 3) Tweak the carousel container spacing */
+  .overflow-x-auto {
+    gap: 0.5rem; /* less space between cards */
+    padding-bottom: 0.5rem;
+  }
+
+  /* 4) Reduce each card’s size and padding */
+  .flex-none.w-80 {
+    width: 16rem !important; /* w-64 */
+    padding: 1rem !important; /* p-4 */
+  }
+
+  /* 5) Tighten inner text */
+  .flex-none.w-80 h4 {
+    font-size: 0.875rem; /* smaller name */
+  }
+  .flex-none.w-80 p {
+    font-size: 0.75rem; /* smaller body text */
+    line-height: 1.3;
+  }
+  .flex-none.w-80 .text-xl {
+    font-size: 1rem; /* smaller stars */
+  }
 }
 </style>
