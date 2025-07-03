@@ -5,42 +5,42 @@ import HeroView from "@/components/HeroView.vue";
 import BrandView from "@/components/BrandView.vue";
 import NewArrivalsView from "@/components/NewArrivalsView.vue";
 import BrowsePanel from "@/components/BrowsePanel.vue";
-import CustomerReview from "@/components/CustomerReview.vue";
+import CustomerReview from "@/components/HomePageCustomerReview.vue";
 import FooterView from "@/components/FooterView.vue";
 </script>
 
 <template>
   <main>
-    <div>
+    <header>
       <SignupBonus />
-    </div>
+    </header>
 
-    <div>
+    <section>
       <NavBar />
-    </div>
+    </section>
 
-    <div>
+    <section>
       <HeroView />
-    </div>
+    </section>
 
-    <div>
+    <section>
       <BrandView />
-    </div>
+    </section>
 
-    <div>
+    <section>
       <NewArrivalsView />
-    </div>
+    </section>
 
-    <div>
+    <section>
       <BrowsePanel />
-    </div>
+    </section>
 
-    <div>
+    <section>
       <CustomerReview />
-    </div>
+    </section>
 
-    <div>
+    <section>
       <FooterView />
-    </div>
+    </section>
   </main>
 </template>

@@ -1,170 +1,101 @@
 <script setup>
-import cloth1 from "@/assets/images/cloth 1.png";
-import cloth2 from "@/assets/images/cloth 2.png";
-import cloth3 from "@/assets/images/cloth 3.png";
-import cloth4 from "@/assets/images/cloth 4.png";
-import cloth5 from "@/assets/images/cloth 5.png";
-import cloth6 from "@/assets/images/cloth 6.png";
-import cloth7 from "@/assets/images/cloth 7.png";
-import cloth8 from "@/assets/images/cloth 8.png";
+// import { ref } from "vue";
+import { useRouter } from "vue-router";
+import products from "@/data/products.js";
+
+const router = useRouter();
+
+// split into two groups
+const newArrivals = products.slice(0, 4);
+const topSelling = products.slice(4, 8);
+
+function goToDetail(id) {
+  router.push({ name: "ProductDetail", params: { id } });
+}
 </script>
 
 <template>
+  <!-- NEW ARRIVALS -->
   <section class="item-section">
     <h2 class="section-title">NEW ARRIVALS</h2>
     <div class="grid">
-      <!-- Item 1 -->
-      <div class="card__item">
-        <img :src="cloth1" alt="T-shirt with Tape Details" class="card__image" />
-        <h3 class="card__name">T-shirt with Tape Details</h3>
+      <div
+        v-for="prod in newArrivals"
+        :key="prod.id"
+        class="card__item cursor-pointer"
+        @click="goToDetail(prod.id)"
+      >
+        <img :src="prod.image" :alt="prod.name" class="card__image" />
+        <h3 class="card__name">{{ prod.name }}</h3>
 
         <div class="card__rating">
-          <!-- 4 full stars + half star -->
-          <span class="star">★</span><span class="star">★</span> <span class="star">★</span
-          ><span class="star">★</span>
-          <span class="star half">★</span>
-          <span class="rating-text">4.5/<span class="total-rating-text">5</span></span>
+          <span
+            v-for="n in 5"
+            :key="n"
+            class="star"
+            :class="{
+              'text-gray-300': n > Math.floor(prod.rating),
+              half: n === Math.ceil(prod.rating) && prod.rating % 1 !== 0,
+            }"
+            >★</span
+          >
+          <span class="rating-text">
+            {{ prod.rating }}/<span class="total-rating-text">5</span>
+          </span>
         </div>
 
         <div class="card__price">
-          <span class="price-current">$120</span>
-        </div>
-      </div>
-
-      <!-- Item 2 -->
-      <div class="card__item">
-        <img :src="cloth2" alt="Skinny Fit Jeans" class="card__image" />
-        <h3 class="card__name">Skinny Fit Jeans</h3>
-
-        <div class="card__rating">
-          <span class="star">★</span><span class="star">★</span> <span class="star">★</span
-          ><span class="star half">★</span>
-          <!-- <span class="star empty">★</span> -->
-          <span class="rating-text">3.5/<span class="total-rating-text">5</span></span>
-        </div>
-
-        <div class="card__price">
-          <span class="price-current">$240</span>
-          <span class="price-original">$260</span>
-          <span class="badge">-20%</span>
-        </div>
-      </div>
-
-      <!-- Item 3 -->
-      <div class="card__item">
-        <img :src="cloth3" alt="Checkered Shirt" class="card__image" />
-        <h3 class="card__name">Checkered Shirt</h3>
-
-        <div class="card__rating">
-          <span class="star">★</span><span class="star">★</span> <span class="star">★</span
-          ><span class="star">★</span>
-          <span class="star half">★</span>
-          <span class="rating-text">4.5/<span class="total-rating-text">5</span></span>
-        </div>
-
-        <div class="card__price">
-          <span class="price-current">$180</span>
-        </div>
-      </div>
-
-      <!-- Item 4 -->
-      <div class="card__item">
-        <img :src="cloth4" alt="Sleeve Striped T-shirt" class="card__image" />
-        <h3 class="card__name">Sleeve Striped T-shirt</h3>
-
-        <div class="card__rating">
-          <span class="star">★</span><span class="star">★</span> <span class="star">★</span
-          ><span class="star">★</span>
-          <span class="star half">★</span>
-          <span class="rating-text">4.5/<span class="total-rating-text">5</span></span>
-        </div>
-
-        <div class="card__price">
-          <span class="price-current">$130</span>
-          <span class="price-original">$160</span>
-          <span class="badge">-30%</span>
+          <span class="price-current">${{ prod.priceCurrent }}</span>
+          <span v-if="prod.priceOriginal" class="price-original"> ${{ prod.priceOriginal }} </span>
+          <span v-if="prod.priceOriginal" class="badge">
+            -{{ Math.round((1 - prod.priceCurrent / prod.priceOriginal) * 100) }}%
+          </span>
         </div>
       </div>
     </div>
-
     <div class="view-all-wrapper">
       <button class="btn-outline">View All</button>
     </div>
   </section>
 
-  <!-- Top selling items -->
+  <!-- TOP SELLING -->
   <section class="item-section-2">
     <h2 class="section-title">TOP SELLING</h2>
     <div class="grid">
-      <!-- Item 1 -->
-      <div class="card__item">
-        <img :src="cloth5" alt="Vertical Stripped Shirt" class="card__image" />
-        <h3 class="card__name">Vertical Stripped Shirt</h3>
+      <div
+        v-for="prod in topSelling"
+        :key="prod.id"
+        class="card__item cursor-pointer"
+        @click="goToDetail(prod.id)"
+      >
+        <img :src="prod.image" :alt="prod.name" class="card__image" />
+        <h3 class="card__name">{{ prod.name }}</h3>
 
         <div class="card__rating">
-          <!-- 4 full stars + half star -->
-          <span class="star">★</span><span class="star">★</span> <span class="star">★</span
-          ><span class="star">★</span> <span class="star">★</span>
-          <span class="rating-text">5.0/<span class="total-rating-text">5</span></span>
+          <span
+            v-for="n in 5"
+            :key="n"
+            class="star"
+            :class="{
+              'text-gray-300': n > Math.floor(prod.rating),
+              half: n === Math.ceil(prod.rating) && prod.rating % 1 !== 0,
+            }"
+            >★</span
+          >
+          <span class="rating-text">
+            {{ prod.rating }}/<span class="total-rating-text">5</span>
+          </span>
         </div>
 
         <div class="card__price">
-          <span class="price-current">$212</span>
-          <span class="price-original">$232</span>
-          <span class="badge">-20%</span>
-        </div>
-      </div>
-
-      <!-- Item 2 -->
-      <div class="card__item">
-        <img :src="cloth6" alt="Courage Graphic T-shirt" class="card__image" />
-        <h3 class="card__name">Courage Graphic T-shirt</h3>
-
-        <div class="card__rating">
-          <span class="star">★</span><span class="star">★</span> <span class="star">★</span
-          ><span class="star">★</span>
-          <!-- <span class="star empty">★</span> -->
-          <span class="rating-text">4.0/<span class="total-rating-text">5</span></span>
-        </div>
-
-        <div class="card__price">
-          <span class="price-current">$145</span>
-        </div>
-      </div>
-
-      <!-- Item 3 -->
-      <div class="card__item">
-        <img :src="cloth7" alt="Loose Fit Bermuda Shorts" class="card__image" />
-        <h3 class="card__name">Loose Fit Bermuda Shorts</h3>
-
-        <div class="card__rating">
-          <span class="star">★</span><span class="star">★</span> <span class="star">★</span>
-          <span class="rating-text">3.0/<span class="total-rating-text">5</span></span>
-        </div>
-
-        <div class="card__price">
-          <span class="price-current">$80</span>
-        </div>
-      </div>
-
-      <!-- Item 4 -->
-      <div class="card__item">
-        <img :src="cloth8" alt="Faded Skinny Jeans" class="card__image" />
-        <h3 class="card__name">Faded Skinny Jeans</h3>
-
-        <div class="card__rating">
-          <span class="star">★</span><span class="star">★</span> <span class="star">★</span
-          ><span class="star">★</span>
-          <span class="star half">★</span>
-          <span class="rating-text">4.5/<span class="total-rating-text">5</span></span>
-        </div>
-
-        <div class="card__price">
-          <span class="price-current">$210</span>
+          <span class="price-current">${{ prod.priceCurrent }}</span>
+          <span v-if="prod.priceOriginal" class="price-original"> ${{ prod.priceOriginal }} </span>
+          <span v-if="prod.priceOriginal" class="badge">
+            -{{ Math.round((1 - prod.priceCurrent / prod.priceOriginal) * 100) }}%
+          </span>
         </div>
       </div>
     </div>
-
     <div class="view-all-wrapper">
       <button class="btn-outline">View All</button>
     </div>
@@ -184,7 +115,7 @@ import cloth8 from "@/assets/images/cloth 8.png";
 
 .section-title {
   text-align: center;
-  font-display: sans-serif;
+  font-family: sans-serif;
   font-size: 48px;
   font-weight: 900;
   margin-bottom: 1.5rem;

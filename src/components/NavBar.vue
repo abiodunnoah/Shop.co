@@ -79,9 +79,11 @@ function toggleSearch() {
   justify-content: space-between;
   gap: 18px;
   padding: 1rem;
-  margin: 0 25px;
+  margin: 0 4rem;
   position: relative; /* for mobile dropdown positioning */
   flex-wrap: nowrap;
+  /* padding: 1.5rem 3rem; */
+  border-bottom: 1px solid #ddd;
 }
 
 /*
