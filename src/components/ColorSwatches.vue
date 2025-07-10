@@ -25,6 +25,9 @@ defineProps({
 .color-swatches {
   display: flex;
   gap: 0.75rem;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
 }
 .swatch-btn {
   width: 2rem;
@@ -34,15 +37,15 @@ defineProps({
   position: relative;
   cursor: pointer;
 }
-.swatch-btn.selected {
+/* .swatch-btn.selected {
   outline: 2px solid #000;
-}
+} */
 .checkmark {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
-  font-size: 1rem;
+  font-size: 1.25rem;
 }
 </style>

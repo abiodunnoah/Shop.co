@@ -1,10 +1,12 @@
 <script setup>
 import { computed } from "vue";
+
 const props = defineProps({
   modelValue: { type: Number, default: 1 },
 });
 const emit = defineEmits(["update:modelValue"]);
 const quantity = computed(() => props.modelValue);
+
 function update(val) {
   emit("update:modelValue", val < 1 ? 1 : val);
 }
@@ -23,13 +25,15 @@ function update(val) {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  background: #f0f0f0;
+  border-radius: 150px;
 }
 .quantity-selector button {
-  padding: 0.25rem 0.75rem;
+  padding: 0.25rem 1.25rem;
   border: none;
-  background: #f0f0f0;
   cursor: pointer;
-  font-size: 1.25rem;
+  font-size: 1.65rem;
+  font-weight: 500;
 }
 .quantity-selector span {
   min-width: 1.5rem;

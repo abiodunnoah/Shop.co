@@ -9,8 +9,8 @@ import cloth5 from "@/assets/images/cloth 5.png";
 import cloth6 from "@/assets/images/cloth 6.png";
 import cloth7 from "@/assets/images/cloth 7.png";
 import cloth8 from "@/assets/images/cloth 8.png";
-import blackStriped from "@/assets/images/Black Striped T-shirt.png";
-import poloWthContrastTrims from "@/assets/images/Polo with Contrast Trims.png";
+import blackStriped from "@/assets/images/Polo with Contrast Trims.png";
+import poloWthContrastTrims from "@/assets/images/Gradient Graphic T-shirt.png";
 import poloWithTipping from "@/assets/images/Polo with Tipping Details.png";
 import gradientGraphicTshirt from "@/assets/images/Black Striped T-shirt.png";
 

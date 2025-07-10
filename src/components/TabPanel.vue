@@ -34,12 +34,15 @@ function updateActive(i) {
 .tabs {
   display: flex;
   flex-direction: column;
+  margin-top: 40px;
 }
+
 .tab-list {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #ddd;
 }
+
 .tab-list button {
   padding: 0.75rem 1.5rem;
   border: none;
@@ -48,10 +51,12 @@ function updateActive(i) {
   font-weight: 600;
   color: gray;
 }
+
 .tab-list button.active {
   border-bottom: 2px solid #000;
   color: black;
 }
+
 .tab-panels {
   padding: 1rem 0;
 }

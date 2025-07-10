@@ -4,7 +4,7 @@ import tsModel from "@/assets/images/ts-model.png";
 
 export const productDetail = {
   id: "abc123",
-  name: "One Life Graphic T-Shirt",
+  name: "ONE LIFE GRAPHIC T-SHIRT",
   rating: 4.5,
   price: 260,
   originalPrice: 300,
@@ -20,7 +20,7 @@ export const productDetail = {
     { label: "Small", inStock: true },
     { label: "Medium", inStock: true },
     { label: "Large", inStock: true },
-    { label: "X-Large", inStock: true },
+    { label: "X-Large", inStock: false },
   ],
   images: [tsFront, tsBack, tsModel],
   faqs: [

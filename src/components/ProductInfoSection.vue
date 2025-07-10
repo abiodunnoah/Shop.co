@@ -38,15 +38,21 @@ function emitAddToCart() {
     <div class="top">
       <ProductGallery :images="product.images" v-model:currentImage="currentImage" />
       <div class="details">
-        <h1>{{ product.name }}</h1>
+        <h1 class="product-name">{{ product.name }}</h1>
         <Rating :value="product.rating" />
-        <PriceDisplay :price="product.price" :original="product.originalPrice" />
-        <p class="desc">{{ product.description }}</p>
+        <PriceDisplay
+          :price="product.price"
+          :original="product.originalPrice"
+          :discountPercent="product.discountPercent"
+        />
+        <div class="desc-wrapper">
+          <p class="desc">{{ product.description }}</p>
+        </div>
 
-        <h4>Select Colors</h4>
+        <h4 class="select-color">Select Colors</h4>
         <ColorSwatches :colors="product.colors" v-model:selected="selectedColor" />
 
-        <h4>Choose Size</h4>
+        <h4 class="size-selection">Choose Size</h4>
         <SizeSelector :sizes="product.sizes" v-model:selected="selectedSize" />
 
         <div class="buy-row">
@@ -72,13 +78,66 @@ function emitAddToCart() {
 .info-section .top {
   display: flex;
   gap: 2rem;
+  flex-wrap: wrap;
 }
+
+.product-name {
+  font-size: 35px;
+  font-weight: 900;
+}
+
+.desc-wrapper {
+  border-bottom: 1px solid #ddd;
+  margin-top: 10px;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.desc {
+  color: grey;
+}
+
 .details {
   flex: 1;
 }
+
+.select-color {
+  margin-bottom: 15px;
+}
+
+.size-selection {
+  margin-bottom: 15px;
+}
+
 .buy-row {
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .info-section .top {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .product-name {
+    font-size: 25px;
+    line-height: 1.2;
+  }
+
+  .desc-wrapper {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+
+  .buy-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .buy-row > * {
+    width: 100%;
+  }
 }
 </style>

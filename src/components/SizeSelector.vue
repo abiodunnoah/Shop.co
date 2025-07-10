@@ -26,6 +26,9 @@ defineProps({
 .size-selector {
   display: flex;
   gap: 0.5rem;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
 }
 .size-btn {
   padding: 0.5rem 1rem;
