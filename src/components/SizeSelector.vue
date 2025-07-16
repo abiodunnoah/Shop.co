@@ -45,4 +45,10 @@ defineProps({
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+@media (max-width: 768px) {
+  .size-btn {
+    padding: 0.5rem 0.95rem;
+  }
+}
 </style>

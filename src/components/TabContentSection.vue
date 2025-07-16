@@ -139,5 +139,30 @@ function OnLoadMore() {
   border-radius: 9999px;
   padding: 0.75rem 2rem;
   cursor: pointer;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .sort-dropdown {
+    display: none;
+  }
+
+  .reviews-title {
+    font-size: 1.15rem;
+  }
+
+  .review-count {
+    font-size: 14px;
+  }
+
+  .btn-icon {
+    padding: 0.5rem;
+    width: 39px;
+  }
+
+  .btn-primary {
+    padding: 0.5rem 1.25rem;
+    font-size: 13px;
+  }
 }
 </style>

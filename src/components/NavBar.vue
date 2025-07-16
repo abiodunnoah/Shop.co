@@ -1,13 +1,28 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import SearchBar from "@/assets/icons/SearchIcon.png";
 import cart from "@/assets/icons/cart.png";
 import Avatar from "@/assets/icons/avatar.svg";
 import MenuIcon from "@/assets/icons/menu.png";
 
+const router = useRouter();
 const searchInput = ref("");
 const menuOpen = ref(false);
 const searchOpen = ref(false);
+
+const categories = [
+  { label: "Shop", slug: "shop" },
+  { label: "Casual", slug: "casual" },
+  { label: "Formal", slug: "formal" },
+  { label: "T‑shirts", slug: "t-shirts" },
+  { label: "Jeans", slug: "jeans" },
+  { label: "Formal", slug: "formal" },
+  { label: "Sportswear", slug: "sportswear" },
+  { label: "Accessories", slug: "accessories" },
+];
+
+const selectedCategory = ref("shop");
 
 function toggleMenu() {
   menuOpen.value = !menuOpen.value;
@@ -16,11 +31,14 @@ function toggleMenu() {
 function toggleSearch() {
   searchOpen.value = !searchOpen.value;
 }
+
+function goToCategory() {
+  router.push({ name: "CategoryPage", params: { category: selectedCategory.value } });
+}
 </script>
 
 <template>
   <nav class="nav">
-    <!-- 1️⃣ Hamburger (mobile only) + Logo -->
     <div class="flex items-center flex-shrink-0">
       <button
         type="button"
@@ -33,9 +51,14 @@ function toggleSearch() {
       <h1>SHOP.CO</h1>
     </div>
 
-    <!-- 2️⃣ Desktop links (untouched) -->
     <div class="links hidden md:flex">
-      <p>Shop</p>
+      <div class="shop-select">
+        <select v-model="selectedCategory" @change="goToCategory" class="px-1 py-1">
+          <option v-for="category in categories" :key="category.slug" :value="category.slug">
+            {{ category.label }}
+          </option>
+        </select>
+      </div>
       <p>On Sales</p>
       <p>New Arrival</p>
       <p>Brands</p>
@@ -101,6 +124,25 @@ h1 {
   display: inline-block;
   margin-right: 1rem;
   font-size: 12px;
+}
+.shop-select {
+  position: relative;
+}
+
+.shop-select select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 0.1rem 1rem 0.1rem 0.5rem;
+}
+
+.shop-select::after {
+  content: "▼";
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .search {

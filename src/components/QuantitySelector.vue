@@ -35,8 +35,20 @@ function update(val) {
   font-size: 1.65rem;
   font-weight: 500;
 }
+
 .quantity-selector span {
   min-width: 1.5rem;
   text-align: center;
+}
+
+@media (max-width: 768px) {
+  .quantity-selector button {
+    padding: 0.15rem 0.75rem;
+    font-size: 1.65rem;
+  }
+
+  .quantity-selector span {
+    min-width: 1rem;
+  }
 }
 </style>

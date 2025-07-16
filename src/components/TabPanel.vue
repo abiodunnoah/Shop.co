@@ -19,6 +19,7 @@ function updateActive(i) {
         role="tab"
         :aria-selected="i === active"
         :class="{ active: i === active }"
+        class="tab-button"
         @click="updateActive(i)"
       >
         {{ label }}
@@ -59,5 +60,11 @@ function updateActive(i) {
 
 .tab-panels {
   padding: 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .tab-button {
+    font-size: 11px;
+  }
 }
 </style>

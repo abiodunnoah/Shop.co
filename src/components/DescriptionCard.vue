@@ -10,4 +10,10 @@ defineProps({ text: String });
 .description {
   color: #555;
 }
+
+@media (max-width: 768px) {
+  .description {
+    font-size: 14px;
+  }
+}
 </style>

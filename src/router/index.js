@@ -18,6 +18,12 @@ const router = createRouter({
       component: () => import("../views/ProductDetail.vue"),
       props: true,
     },
+    {
+      path: "/shop/:category",
+      name: "CategoryPage",
+      component: () => import("../views/CategoryPage.vue"),
+      props: true,
+    },
   ],
 });
 

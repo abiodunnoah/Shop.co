@@ -168,4 +168,56 @@ function goToDetail(id) {
   text-align: center;
   margin-top: 2rem;
 }
+
+@media (max-width: 768px) {
+  .item-section {
+    padding: 2rem 1rem;
+  }
+
+  .item-section-2 {
+    padding: 2rem 1rem;
+  }
+
+  .section-title {
+    font-size: 35px;
+    margin-bottom: 0.25rem;
+  }
+
+  .grid {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    /* gap: 1rem; */
+    padding-bottom: 1rem;
+  }
+
+  .card__item {
+    flex: 0 0 55%; /* show ~1.3 cards at a time; tweak to taste */
+    min-width: 180px; /* guarantee a usable hit area */
+    scroll-snap-align: start;
+  }
+
+  .grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .grid {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .card__name {
+    font-size: 0.9rem;
+  }
+
+  .price-current {
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  .price-original {
+    font-size: 18px;
+  }
+}
 </style>

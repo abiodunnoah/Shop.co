@@ -131,13 +131,16 @@ function emitAddToCart() {
     margin-bottom: 10px;
   }
 
-  .buy-row {
-    flex-direction: column;
-    gap: 0.5rem;
+  .desc {
+    font-size: 13px;
   }
 
-  .buy-row > * {
-    width: 100%;
+  .size-selection {
+    font-size: 13px;
+  }
+
+  .select-color {
+    font-size: 13px;
   }
 }
 </style>

@@ -39,6 +39,11 @@ defineProps({ review: Object });
   margin-bottom: 1rem;
 }
 
+.author-name {
+  font-weight: 800;
+  font-size: 16px;
+}
+
 /* Header container */
 .card-header {
   display: flex;
@@ -70,5 +75,11 @@ defineProps({ review: Object });
 }
 .more-btn svg {
   display: block;
+}
+
+@media (max-width: 768px) {
+  .more-btn {
+    display: none;
+  }
 }
 </style>

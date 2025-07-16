@@ -1,29 +1,21 @@
 <script setup>
-// import { ref } from "vue";
-import { useRouter } from "vue-router";
 import products from "@/data/products.js";
-
-const router = useRouter();
 
 // split into two groups
 const newArrivals = products.slice(0, 4);
 const topSelling = products.slice(4, 8);
-
-function goToDetail(id) {
-  router.push({ name: "ProductDetail", params: { id } });
-}
 </script>
 
 <template>
   <!-- NEW ARRIVALS -->
   <section class="item-section">
-    <h2 class="section-title">NEW ARRIVALS</h2>
+    <h2 class="section-title cursor-pointer">NEW ARRIVALS</h2>
     <div class="grid">
-      <div
+      <router-link
         v-for="prod in newArrivals"
         :key="prod.id"
+        :to="{ name: 'ProductDetail', params: { id: prod.id } }"
         class="card__item cursor-pointer"
-        @click="goToDetail(prod.id)"
       >
         <img :src="prod.image" :alt="prod.name" class="card__image" />
         <h3 class="card__name">{{ prod.name }}</h3>
@@ -51,7 +43,7 @@ function goToDetail(id) {
             -{{ Math.round((1 - prod.priceCurrent / prod.priceOriginal) * 100) }}%
           </span>
         </div>
-      </div>
+      </router-link>
     </div>
     <div class="view-all-wrapper">
       <button class="btn-outline">View All</button>
@@ -60,7 +52,7 @@ function goToDetail(id) {
 
   <!-- TOP SELLING -->
   <section class="item-section-2">
-    <h2 class="section-title">TOP SELLING</h2>
+    <h2 class="section-title cursor-pointer">TOP SELLING</h2>
     <div class="grid">
       <div
         v-for="prod in topSelling"

@@ -21,4 +21,10 @@ defineProps({
   border-radius: 9999px;
   cursor: pointer;
 }
+@media (max-width: 768px) {
+  .add-to-cart-btn {
+    padding: 0.75rem 1rem;
+    font-size: 13px;
+  }
+}
 </style>

@@ -57,7 +57,6 @@ function select(i) {
   list-style: none;
   margin: 0;
   padding: 0;
-  /* fixed width for consistency */
   width: 10rem;
 }
 
@@ -67,8 +66,8 @@ function select(i) {
   aspect-ratio: 1 / 1;
   /* padding: 0.5rem; */
   background: #f5f4f2;
-  border: 2px solid transparent;
-  border-radius: 1.5rem;
+  border: 1.5px solid transparent;
+  border-radius: 0.5rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -109,5 +108,37 @@ function select(i) {
   max-height: 80vh;
   object-fit: contain;
   border-radius: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .product-media {
+    display: flex;
+    flex-direction: column-reverse; /* Put thumbnails BELOW preview */
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .thumbnails {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    /* overflow-x: auto; */
+    padding-bottom: 0.5rem;
+  }
+
+  .thumb-btn {
+    width: 4rem;
+    height: 4rem;
+    flex: 0 0 auto;
+  }
+
+  .preview {
+    width: 100%;
+  }
+
+  .preview-img {
+    max-height: 50vh;
+  }
 }
 </style>
