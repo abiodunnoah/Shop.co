@@ -1,6 +1,8 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import SignupBonus from "@/components/SignupBonus.vue";
+import NavBar from "@/components/NavBar.vue";
 import FilterSidebar from "@/components/FilterSidebar.vue";
 // import ProductCard from "@/components/ProductCard.vue";
 // import Pagination from "@/components/Pagination.vue";
@@ -46,6 +48,14 @@ onMounted(fetchProducts);
 </script>
 
 <template>
+  <header>
+    <SignupBonus />
+  </header>
+
+  <section>
+    <NavBar />
+  </section>
+
   <div class="category-page">
     <nav class="breadcrumbs">
       <router-link to="/">Home</router-link>
