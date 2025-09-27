@@ -19,9 +19,20 @@ const router = createRouter({
       props: true,
     },
     {
+      path: "/shop",
+      name: "ShopOverview",
+      redirect: { name: "CategoryPage", params: { category: "casual" } },
+    },
+    {
       path: "/shop/:category",
       name: "CategoryPage",
       component: () => import("../views/CategoryPage.vue"),
+      props: true,
+    },
+    {
+      path: "/cart",
+      name: "/CartPage",
+      component: () => import("../views/CartPage.vue"),
       props: true,
     },
   ],

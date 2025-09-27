@@ -1,23 +1,29 @@
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
+import { useRouter } from "vue-router";
 import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
+import FooterView from "@/components/FooterView.vue";
 import FilterSidebar from "@/components/FilterSidebar.vue";
-// import ProductCard from "@/components/ProductCard.vue";
-// import Pagination from "@/components/Pagination.vue";
+import ProductCard from "@/components/ProductCard.vue";
+import Pagination from "@/components/PaginationView.vue";
 import allProducts from "@/data/products.js";
+import FilterIcon from "@/assets/icons/FilterIcon.png";
 
-const route = useRoute();
 const router = useRouter();
-const category = route.params.category || "casual";
 const categoryLabel = computed(() => category.charAt(0).toUpperCase() + category.slice(1));
 
 const page = ref(1);
-const perPage = 9;
+const perPage = 10;
 const sortOrder = ref("popular");
 const total = ref(0);
 const products = ref([]);
+
+const props = defineProps({
+  category: { type: String, required: true },
+});
+
+const category = props.category;
 
 const totalPages = computed(() => Math.ceil(total.value / perPage));
 const start = computed(() => (page.value - 1) * perPage + 1);
@@ -45,6 +51,32 @@ function goToDetail(id) {
 }
 
 onMounted(fetchProducts);
+
+const showMobileFilters = ref(false);
+const closeBtn = ref(null);
+
+function openMobileFilters() {
+  showMobileFilters.value = true;
+  nextTick(() => {
+    if (closeBtn.value) closeBtn.value.focus();
+  });
+}
+
+function closeMobileFilters() {
+  showMobileFilters.value = false;
+}
+
+function onKeydown(e) {
+  if (e.key === "Escape" && showMobileFilters.value) closeMobileFilters();
+}
+
+onMounted(() => window.addEventListener("keydown", onKeydown));
+onUnmounted(() => window.removeEventListener("keydown", onKeydown));
+
+function applyFromModal(filters) {
+  applyFilters(filters);
+  closeMobileFilters();
+}
 </script>
 
 <template>
@@ -66,20 +98,23 @@ onMounted(fetchProducts);
     </nav>
 
     <div class="content">
-      <FilterSidebar @apply="applyFilters" />
+      <FilterSidebar @apply="applyFilters" class="filter" />
 
       <div class="main">
         <div class="header">
           <h1 class="title">{{ categoryLabel }}</h1>
           <div class="sort-by">
             <span>Showing {{ start }}–{{ end }} of {{ total }} Products</span>
-            <select v-model="sortOrder" @change="fetchProducts">
+            <select v-model="sortOrder" @change="fetchProducts" class="select">
               <option value="popular">Most Popular</option>
               <option value="newest">Newest</option>
               <option value="price-low">Price: Low to High</option>
               <option value="price-high">Price: High to Low</option>
             </select>
           </div>
+          <button class="mobile-filter-btn" aria-label="Open filters" @click="openMobileFilters">
+            <img :src="FilterIcon" alt="Filter Icon" class="filter-icon" />
+          </button>
         </div>
 
         <div class="grid">
@@ -102,11 +137,43 @@ onMounted(fetchProducts);
       </div>
     </div>
   </div>
+
+  <section>
+    <FooterView />
+  </section>
+
+  <teleport to="body">
+    <div
+      v-if="showMobileFilters"
+      class="mobile-filter-overlay"
+      @click.self="closeMobileFilters"
+      aria-hidden="false"
+    >
+      <div class="mobile-filter-panel" role="dialog" aria-modal="true" aria-label="Filter products">
+        <header class="mobile-filter-header">
+          <button
+            ref="closeBtn"
+            class="mobile-filter-close"
+            @click="closeMobileFilters"
+            aria-label="Close filters"
+          >
+            ✕
+          </button>
+        </header>
+
+        <FilterSidebar @apply="applyFromModal" />
+      </div>
+    </div>
+  </teleport>
 </template>
 
 <style scoped>
 .category-page {
   padding: 2rem 4rem;
+  margin-bottom: 4rem;
+}
+.filter-icon {
+  display: none;
 }
 .breadcrumbs {
   font-size: 0.875rem;
@@ -167,7 +234,47 @@ onMounted(fetchProducts);
   gap: 1.5rem;
 }
 
-@media (max-width: 768px) {
+.mobile-filter-btn {
+  background: none;
+  cursor: pointer;
+}
+
+.mobile-filter-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.mobile-filter-panel {
+  background: #fff;
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  overflow-y: auto;
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.mobile-filter-close {
+  font-size: 1.25rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 1044px) {
   .category-page {
     padding: 1rem;
   }
@@ -176,6 +283,21 @@ onMounted(fetchProducts);
   }
   .content > :first-child {
     width: 100%;
+  }
+  .filter {
+    display: none;
+  }
+  .select {
+    display: none;
+  }
+  .title {
+    font-size: 1.75rem;
+  }
+  .filter-icon {
+    display: initial;
+  }
+  .mobile-filter-overlay {
+    display: flex;
   }
 }
 </style>

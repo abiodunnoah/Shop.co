@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import FilterIcon from "@/assets/icons/FilterIcon.png";
 import Collapsible from "./CollapsibleView.vue";
 
 const price = ref({
@@ -29,7 +30,10 @@ function captureFilters() {
 
 <template>
   <aside class="sidebar">
-    <h2 class="sidebar-title">Filters</h2>
+    <div class="filter-container">
+      <h2 class="sidebar-title">Filters</h2>
+      <img :src="FilterIcon" alt="Filter Icon" class="filter-icon" />
+    </div>
 
     <!-- Wears -->
     <Collapsible title="Wears">
@@ -100,6 +104,16 @@ function captureFilters() {
 .sidebar-title {
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-icon {
+  width: 2rem;
+  height: 2rem;
 }
 
 .apply-btn {

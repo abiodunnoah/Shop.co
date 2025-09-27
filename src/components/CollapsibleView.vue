@@ -20,7 +20,7 @@ function toggle() {
       <span>{{ title }}</span>
       <svg :class="{ open: isOpen }" class="chevron" width="16" height="16" view-box="0 0 24 24">
         <path
-          d="M6 916 6 6-6"
+          d="M6 9 l6 6 l6 -6"
           stroke="currentColor"
           stroke-width="2"
           fill="none"

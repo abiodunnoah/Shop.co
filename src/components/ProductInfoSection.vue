@@ -41,8 +41,8 @@ function emitAddToCart() {
         <h1 class="product-name">{{ product.name }}</h1>
         <Rating :value="product.rating" />
         <PriceDisplay
-          :price="product.price"
-          :original="product.originalPrice"
+          :price="product.priceCurrent"
+          :original="product.priceOriginal"
           :discountPercent="product.discountPercent"
         />
         <div class="desc-wrapper">
