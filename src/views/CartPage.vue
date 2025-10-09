@@ -4,17 +4,20 @@ import { useRouter } from "vue-router";
 import { useCartStore } from "@/stores/cartStore";
 import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
-// import FooterView from "@/components/FooterView.vue";
+
+// demo images
+import img1 from "@/assets/images/cloth 1.png";
+import img2 from "@/assets/images/cloth 2.png";
+import img3 from "@/assets/images/cloth 3.png";
 
 const router = useRouter();
 const cart = useCartStore();
 
 // Promo state
 const promoCode = ref("");
-const appliedPromo = ref(null); // { code: 'SAVE20', percent: 0.2 } or null
+const appliedPromo = ref(null);
 const deliveryFee = 15;
 
-// helpers
 const subtotal = computed(() =>
   cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * (i.quantity || 0), 0)
 );
@@ -32,13 +35,11 @@ function fmtCurrency(v) {
   return `$${Number(v).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
 }
 
-// Quantity controls — try to use store methods if present, otherwise mutate
 function increaseQty(item) {
   if (typeof cart.updateQuantity === "function") {
     cart.updateQuantity(item.key ?? item.id, (item.quantity || 0) + 1);
     return;
   }
-  // fallback: mutate directly
   item.quantity = (item.quantity || 0) + 1;
 }
 
@@ -60,7 +61,6 @@ function removeItem(item) {
     cart.removeFromCart(item.key ?? item.id);
     return;
   }
-  // fallback: filter array
   cart.items = cart.items.filter((i) => (i.key ?? i.id) !== (item.key ?? item.id));
 }
 
@@ -68,18 +68,14 @@ function applyPromo() {
   const code = (promoCode.value || "").trim().toUpperCase();
   if (!code) return alert("Enter a promo code.");
 
-  // Example: we support a single promo "SAVE20" => 20% off
   if (code === "SAVE20") {
     appliedPromo.value = { code: "SAVE20", percent: 0.2 };
     return;
   }
-
-  // Example fixed discount code
   if (code === "TAKE10") {
     appliedPromo.value = { code: "TAKE10", percent: 0.1 };
     return;
   }
-
   alert("Promo code not valid.");
 }
 
@@ -89,12 +85,78 @@ function clearPromo() {
 }
 
 function goToCheckout() {
-  // If you have an authenticated checkout flow, validate here.
   router.push({ name: "Checkout" });
 }
 
 function continueShopping() {
   router.push({ name: "CategoryPage", params: { category: "casual" } });
+}
+
+const showDemoButton = false;
+
+function seedDemoCart() {
+  const demoProducts = [
+    {
+      id: "p-101",
+      name: "Gradient Graphic T-shirt",
+      price: 145,
+      image: img1,
+    },
+    {
+      id: "p-102",
+      name: "Checkered Shirt",
+      price: 180,
+      image: img2,
+    },
+    {
+      id: "p-103",
+      name: "Skinny Fit Jeans",
+      price: 240,
+      image: img3,
+    },
+  ];
+
+  if (typeof cart.addToCart === "function") {
+    if (typeof cart.clearCart === "function") cart.clearCart();
+
+    cart.addToCart(demoProducts[0], { size: "Large", color: "White", quantity: 1 });
+    cart.addToCart(demoProducts[1], { size: "Medium", color: "Red", quantity: 1 });
+    cart.addToCart(demoProducts[2], { size: "Large", color: "Blue", quantity: 1 });
+    return;
+  }
+
+  cart.items = [
+    {
+      key: "p-101::Large::White",
+      id: "p-101",
+      name: demoProducts[0].name,
+      price: 145,
+      image: img1,
+      size: "Large",
+      color: "White",
+      quantity: 1,
+    },
+    {
+      key: "p-102::Medium::Red",
+      id: "p-102",
+      name: demoProducts[1].name,
+      price: 180,
+      image: img2,
+      size: "Medium",
+      color: "Red",
+      quantity: 1,
+    },
+    {
+      key: "p-103::Large::Blue",
+      id: "p-103",
+      name: demoProducts[2].name,
+      price: 240,
+      image: img3,
+      size: "Large",
+      color: "Blue",
+      quantity: 1,
+    },
+  ];
 }
 </script>
 
@@ -112,11 +174,15 @@ function continueShopping() {
       <router-link to="/">Home</router-link>
       <span class="sep">›</span>
       <router-link to="/cart">Cart</router-link>
-      <span class="sep">›</span>
-      <span class="current">Your Cart</span>
     </nav>
 
-    <h1 class="page-title">YOUR CART</h1>
+    <div class="top-row">
+      <h1 class="page-title">YOUR CART</h1>
+
+      <div v-if="showDemoButton" class="demo-actions">
+        <button class="demo-btn" @click="seedDemoCart">Populate demo cart</button>
+      </div>
+    </div>
 
     <div v-if="cart.items.length === 0" class="empty">
       <p class="empty-text">Your cart is empty.</p>
@@ -138,9 +204,11 @@ function continueShopping() {
             </div>
 
             <div class="meta">
-              <span v-if="item.size"><strong>Size: </strong>{{ item.size }}</span>
+              <span v-if="item.size"
+                >Size: <strong>{{ item.size }}</strong></span
+              >
               <span v-if="item.color" class="meta-sep"
-                ><strong>Color: </strong> {{ item.color }}</span
+                >Color: <strong>{{ item.color }}</strong></span
               >
             </div>
 
@@ -206,12 +274,9 @@ function continueShopping() {
       </aside>
     </div>
   </main>
-
-  <!-- <FooterView /> -->
 </template>
 
 <style scoped>
-/* page layout */
 .cart-page {
   max-width: 1200px;
   margin: 2rem auto 6rem;
@@ -225,10 +290,27 @@ function continueShopping() {
 .crumbs .sep {
   margin: 0 0.5rem;
 }
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .page-title {
   font-size: 28px;
   font-weight: 900;
   margin-bottom: 1.25rem;
+}
+.demo-actions {
+  margin-left: 1rem;
+}
+.demo-btn {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 /* empty state */
@@ -302,19 +384,17 @@ function continueShopping() {
   background: none;
   border: none;
   cursor: pointer;
-  color: red;
+  color: #d33;
   font-size: 1.1rem;
 }
 
 .meta {
-  display: flex;
-  flex-direction: column;
   color: #666;
   font-size: 0.9rem;
 }
-/* .meta-sep {
+.meta-sep {
   margin-left: 1rem;
-} */
+}
 
 .price-qty {
   display: flex;
