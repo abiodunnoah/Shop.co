@@ -1,16 +1,24 @@
 <script setup>
-defineProps({
+const props = defineProps({
   price: { type: Number, required: true },
   original: { type: Number, default: null },
   discountPercent: { type: Number, default: 0 },
 });
+
+// const percentDecimal = computed(() => (props.discountPercent || 0) / 100);
+// const discountAmount = computed(() => Math.round((props.original || 0) * percentDecimal.value));
+
+// function fmtCurrency(v) {
+//   const n = Number(v) || 0;
+//   return `$${n.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+// }
 </script>
 
 <template>
   <div class="price-display">
     <span class="current">${{ price }}</span>
     <span v-if="original" class="original">${{ original }}</span>
-    <span v-if="original" class="discount">{{ discountPercent }}</span>
+    <span v-if="original" class="discount">-{{ discountPercent }}%</span>
   </div>
 </template>
 

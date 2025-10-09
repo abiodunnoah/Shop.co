@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "@/stores/cartStore";
 import SignupBonus from "@/components/SignupBonus.vue";
@@ -158,6 +158,12 @@ function seedDemoCart() {
     },
   ];
 }
+
+watchEffect(() => {
+  console.log("subtotal:", subtotal.value);
+  console.log("appliedPromo:", appliedPromo.value);
+  console.log("discountAmount:", discountAmount.value);
+});
 </script>
 
 <template>

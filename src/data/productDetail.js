@@ -11,7 +11,7 @@ export default {
   rating: 4.5,
   priceCurrent: 260,
   priceOriginal: 300,
-  discountPercent: "-40%",
+  discountPercent: 40,
   description:
     "This graphic t‑shirt is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.",
   colors: [
