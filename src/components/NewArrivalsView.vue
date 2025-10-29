@@ -1,9 +1,17 @@
 <script setup>
 import products from "@/data/products.js";
+import { onMounted } from "vue";
+import { useProductStore } from "@/stores/productStore";
+
+const store = useProductStore();
 
 // split into two groups
 const newArrivals = products.slice(0, 4);
 const topSelling = products.slice(4, 8);
+
+onMounted(async () => {
+  await store.fetchProducts();
+});
 </script>
 
 <template>

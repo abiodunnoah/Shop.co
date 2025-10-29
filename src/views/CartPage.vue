@@ -45,10 +45,10 @@ function increaseQty(item) {
 
 function decreaseQty(item) {
   const newQty = (item.quantity || 0) - 1;
-  if (newQty <= 0) {
-    removeItem(item);
-    return;
+  if (newQty === 1) {
+    item.quantity;
   }
+
   if (typeof cart.updateQuantity === "function") {
     cart.updateQuantity(item.key ?? item.id, newQty);
     return;
@@ -75,8 +75,9 @@ function applyPromo() {
   if (code === "TAKE10") {
     appliedPromo.value = { code: "TAKE10", percent: 0.1 };
     return;
+  } else {
+    alert("Promo code not valid.");
   }
-  alert("Promo code not valid.");
 }
 
 function clearPromo() {
@@ -159,11 +160,11 @@ function seedDemoCart() {
   ];
 }
 
-watchEffect(() => {
-  console.log("subtotal:", subtotal.value);
-  console.log("appliedPromo:", appliedPromo.value);
-  console.log("discountAmount:", discountAmount.value);
-});
+// watchEffect(() => {
+//   console.log("subtotal:", subtotal.value);
+//   console.log("appliedPromo:", appliedPromo.value);
+//   console.log("discountAmount:", discountAmount.value);
+// });
 </script>
 
 <template>

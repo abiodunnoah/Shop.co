@@ -9,6 +9,7 @@ import MenuIcon from "@/assets/icons/menu.png";
 
 const cart = useCartStore();
 const router = useRouter();
+
 const searchInput = ref("");
 const menuOpen = ref(false);
 const searchOpen = ref(false);
@@ -37,6 +38,42 @@ function toggleSearch() {
 function goToCategory() {
   router.push({ name: "CategoryPage", params: { category: selectedCategory.value } });
 }
+
+// const searchInputRef = ref(null);
+
+// async function openSearchModal() {
+//   searchOpen.value = true;
+//   await nextTick();
+//   searchInputRef.value?.focus?.();
+// }
+
+// function closeSearchModal() {
+//   searchOpen.value = false;
+//   searchOpen.value = "";
+// }
+
+// async function onSearchEnter() {
+//   const q = (searchInput.value || "").trim();
+
+//   if (!q) return;
+//   try {
+//     await productStore.fetchProducts(q, { limit: 20 });
+//   } catch (err) {
+//     console.error("Search failed", err);
+//   }
+// }
+
+// function handleKeydown(e) {
+//   if (e.key === "Escape" && searchOpen.value) closeSearchModal();
+// }
+
+// onMounted(() => {
+//   document.addEventListener("keydown", handleKeydown);
+// });
+
+// onBeforeMount(() => {
+//   document.addEventListener("keydown", handleKeydown);
+// });
 </script>
 
 <template>
@@ -67,6 +104,8 @@ function goToCategory() {
     </div>
 
     <!-- 3️⃣ Mobile dropdown -->
+    <div v-if="menuOpen" class="menu-overlay" @click="menuOpen = false"></div>
+
     <div
       v-if="menuOpen"
       class="mobile-links absolute top-full left-0 mt-1 bg-white shadow-lg rounded-lg py-2 px-3 w-40 z-20"
@@ -97,7 +136,9 @@ function goToCategory() {
           <span v-if="cart.totalItems > 0" class="badge">{{ cart.totalItems }}</span>
         </router-link>
       </div>
-      <img :src="Avatar" alt="User Avatar" class="avatar__icon" />
+      <router-link to="/login">
+        <img :src="Avatar" alt="User Avatar" class="avatar__icon" />
+      </router-link>
     </div>
   </nav>
 </template>
@@ -113,6 +154,13 @@ function goToCategory() {
   position: relative;
   flex-wrap: nowrap;
   border-bottom: 1px solid #ddd;
+}
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  background: rgba(0, 0, 0, 0);
 }
 
 .cart {
@@ -203,7 +251,7 @@ h1 {
 }
 
 /* Hide desktop links on mobile (redundant with hidden md:flex) */
-@media (max-width: 1044px) {
+@media (max-width: 1023px) {
   .links {
     display: none !important;
   }
