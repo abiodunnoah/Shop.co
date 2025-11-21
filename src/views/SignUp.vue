@@ -1,14 +1,63 @@
 <script setup>
 import { ref } from "vue";
 import { NSpin } from "naive-ui";
+import { useAuthStore } from "@/stores/authStore";
+import { useRouter } from "vue-router";
+import { mapAuthError } from "@/utils/authErrors";
 
-const showPassword = ref(false);
-const showConfirmPassword = ref(false);
-const error = ref(null);
+const router = useRouter();
+const auth = useAuthStore();
+
 const email = ref("");
 const password = ref("");
 const confirmPassword = ref("");
-const isSubmitting = ref(false);
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
+const error = ref(null);
+const isLoading = ref(false);
+const info = ref("");
+
+async function submit() {
+  error.value = null;
+  info.value = "";
+
+  if (!email.value || !password.value) {
+    error.value = "Email and password are required.";
+    return;
+  }
+
+  if (password.value !== confirmPassword.value) {
+    error.value = "passwords do not match.";
+    return;
+  }
+
+  if (password.value.length < 8) {
+    error.value = "Password must be at least 8 characters long.";
+    return;
+  }
+
+  if (password.value.toLowerCase() === "password" || password.value === "12345678") {
+    error.value = "Choose a stronger password.";
+    return;
+  }
+
+  isLoading.value = true;
+
+  try {
+    await auth.register(email.value, password.value);
+
+    info.value = "Account created - you are now signed in.";
+    email.value = "";
+    password.value = "";
+    confirmPassword.value = "";
+
+    router.push("/");
+  } catch (err) {
+    error.value = mapAuthError(err.code) || err?.message || "Sign up failed.";
+  } finally {
+    isLoading.value = false;
+  }
+}
 </script>
 
 <template>
@@ -16,52 +65,68 @@ const isSubmitting = ref(false);
     <div class="form-container bg-gray-100">
       <h2 class="form-title">Register</h2>
 
-      <form @submit.prevent="submit" class="form-content">
+      <form @submit.prevent="submit" class="form-content" autocomplete="on">
         <div class="form-group">
           <label for="email" class="form-label">Email:</label>
-          <input type="email" v-model="email" class="form-input" required />
+          <input
+            id="email"
+            type="email"
+            v-model="email"
+            class="form-input"
+            required
+            autocomplete="email"
+          />
         </div>
 
         <div class="form-group">
           <label for="password" class="form-label">Password:</label>
           <div class="input-wrapper">
             <input
+              id="password"
               :type="showPassword ? 'text' : 'password'"
               v-model="password"
               class="form-input"
               required
+              minlength="8"
+              autocomplete="new-password"
             />
-            <button @click="showPassword = !showPassword" class="toggle-password">
+            <button type="button" @click="showPassword = !showPassword" class="toggle-password">
               {{ showPassword ? "Hide" : "Show" }}
             </button>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="confirm password" class="form-label">Confirm Password:</label>
+          <label for="confirm-password" class="form-label">Confirm Password:</label>
           <div class="input-wrapper">
             <input
+              id="confirm-password"
               :type="showConfirmPassword ? 'text' : 'password'"
               v-model="confirmPassword"
               class="form-input"
               required
+              minlength="8"
+              autocomplete="new-password"
             />
-            <button class="toggle-password" @click="showConfirmPassword = !showConfirmPassword">
+            <button
+              type="button"
+              class="toggle-password"
+              @click="showConfirmPassword = !showConfirmPassword"
+            >
               {{ showConfirmPassword ? "Hide" : "Show" }}
             </button>
           </div>
         </div>
 
         <div v-if="error" class="form-error">{{ error }}</div>
+        <div v-if="info" class="form-info">{{ info }}</div>
 
         <button
           type="submit"
           class="submit-button bg-blue-600 hover:bg-blue-700 flex justify-center items-center"
-          :disabled="isSubmitting"
+          :disabled="isLoading"
         >
-          <template v-if="isSubmitting">
-            <NSpin size="small" class="mr-2" /> Signing Up...
-          </template>
+          <template v-if="isLoading"> <NSpin size="small" class="mr-2" /> Signing Up... </template>
           <template v-else>Sign Up</template>
         </button>
       </form>

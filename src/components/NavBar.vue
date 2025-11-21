@@ -1,18 +1,24 @@
 <script setup>
 import { useCartStore } from "@/stores/cartStore";
-import { ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/authStore";
 import SearchBar from "@/assets/icons/SearchIcon.png";
 import cartIcon from "@/assets/icons/cart.png";
 import Avatar from "@/assets/icons/avatar.svg";
 import MenuIcon from "@/assets/icons/menu.png";
 
+const auth = useAuthStore();
 const cart = useCartStore();
 const router = useRouter();
 
 const searchInput = ref("");
 const menuOpen = ref(false);
 const searchOpen = ref(false);
+
+const userMenuOpen = ref(false);
+const isLoggingOut = ref(false);
+const userMenuRef = ref(null);
 
 const categories = [
   { label: "Shop", slug: "shop" },
@@ -37,6 +43,42 @@ function toggleSearch() {
 
 function goToCategory() {
   router.push({ name: "CategoryPage", params: { category: selectedCategory.value } });
+}
+
+function toggleUserMenu() {
+  userMenuOpen.value = !userMenuOpen.value;
+}
+
+function onDocClick(e) {
+  if (!userMenuRef.value) return;
+  if (userMenuOpen.value && !userMenuRef.value.contains(e.target)) {
+    userMenuOpen.value = false;
+  }
+}
+
+onMounted(() => {
+  document.addEventListener("click", onDocClick);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", onDocClick);
+});
+
+async function logoutUser() {
+  userMenuOpen.value = false;
+  isLoggingOut.value = true;
+
+  try {
+    if (typeof cart.clearCart === "function") {
+      cart.clearCart();
+    }
+    await auth.logout();
+    router.push("/");
+  } catch (err) {
+    console.error("Logout failed:", err);
+  } finally {
+    isLoggingOut.value = false;
+  }
 }
 
 // const searchInputRef = ref(null);
@@ -136,9 +178,76 @@ function goToCategory() {
           <span v-if="cart.totalItems > 0" class="badge">{{ cart.totalItems }}</span>
         </router-link>
       </div>
-      <router-link to="/login">
-        <img :src="Avatar" alt="User Avatar" class="avatar__icon" />
-      </router-link>
+
+      <!-- <template v-if="auth.user">
+        <img
+          src="https://img.freepik.com/premium-psd/smiling-3d-cartoon-man_975163-762.jpg?w=826"
+          class="w-5 h-5 rounded-full"
+        />
+      </template>
+
+      <template v-else>
+        <router-link to="/login">
+          <img :src="Avatar" alt="User Avatar" class="avatar__icon" />
+        </router-link>
+      </template> -->
+
+      <template v-if="auth.user">
+        <div class="user-wrapper relative" ref="userMenuRef">
+          <button
+            class="avatar-btn flex items-center gap-2"
+            @click="toggleUserMenu"
+            :aria-expanded="userMenuOpen.toString()"
+            aria-haspopup="menu"
+            type="button"
+          >
+            <img
+              src="https://img.freepik.com/premium-psd/smiling-3d-cartoon-man_975163-762.jpg?w=826"
+              alt="Account"
+              class="w-8 h-8 rounded-full"
+            />
+          </button>
+
+          <div
+            v-if="userMenuOpen"
+            class="user-menu absolute right-0 mt-2 w-44 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-30"
+            role="menu"
+            aria-label="User menu"
+          >
+            <router-link
+              to="/account"
+              class="menu-item block px-4 py-2 text-sm hover:bg-gray-100"
+              role="menuitem"
+            >
+              Account
+            </router-link>
+
+            <router-link
+              to="/orders"
+              class="menu-item block px-4 py-2 text-sm hover:bg-gray-100"
+              role="menuitem"
+            >
+              Orders
+            </router-link>
+
+            <button
+              class="menu-item block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+              @click="logoutUser"
+              :disabled="isLoggingOut"
+              role="menuitem"
+            >
+              <template v-if="isLoggingOut">Signing out...</template>
+              <template v-else>Logout</template>
+            </button>
+          </div>
+        </div>
+      </template>
+
+      <template v-else>
+        <router-link to="/login">
+          <img :src="Avatar" alt="User Avatar" class="avatar__icon" />
+        </router-link>
+      </template>
     </div>
   </nav>
 </template>
@@ -240,9 +349,32 @@ h1 {
   display: none;
 }
 
+/* user menu */
+.user-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.avatar-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+}
+.user-menu {
+  min-width: 11rem;
+}
+.menu-item {
+  cursor: pointer;
+}
+.menu-item[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 @media (min-width: 768px) {
   .search-input[style] {
-    /* v-show hides via inline style, so this overrides */
     display: block !important;
     position: static;
     transform: none;
@@ -250,14 +382,13 @@ h1 {
   }
 }
 
-/* Hide desktop links on mobile (redundant with hidden md:flex) */
 @media (max-width: 1023px) {
   .links {
     display: none !important;
   }
 
   .nav {
-    margin: 0 0; /* was 0 25px, now 0 10px on mobile */
+    margin: 0 0;
   }
 
   .mobile-links {
@@ -265,7 +396,7 @@ h1 {
   }
 
   .hamburger-btn {
-    margin-right: 20px; /* was 0.5rem, now 0.5rem on mobile */
+    margin-right: 20px;
     width: 20px;
     height: 25px;
     display: initial;

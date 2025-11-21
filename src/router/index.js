@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../views/HomePage.vue";
+import { useAuthStore } from "@/stores/authStore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,21 +32,45 @@ const router = createRouter({
     },
     {
       path: "/cart",
-      name: "/CartPage",
+      name: "CartPage",
       component: () => import("../views/CartPage.vue"),
       props: true,
     },
     {
       path: "/login",
-      name: "/Login",
-      component: () => import("@/views/LoginPage.vue"),
+      name: "Login",
+      component: () => import("@/views/SignIn.vue"),
+      meta: { requiresGuest: true },
     },
     {
       path: "/register",
-      name: "/Register",
-      component: () => import("@/views/RegistrationPage.vue"),
+      name: "Register",
+      component: () => import("@/views/SignUp.vue"),
+      meta: { requiresGuest: true },
     },
+    { path: "/:pathMatch(.*)*", redirect: "/" },
   ],
+});
+
+router.beforeEach(async (to) => {
+  const auth = useAuthStore();
+
+  await auth.initAuth();
+
+  const user = auth.user;
+
+  if (to.meta?.requiresAuth && !user) {
+    return {
+      name: "Login",
+      query: { redirect: to.fullPath },
+    };
+  }
+
+  if (to.meta?.requiresGuest && user) {
+    return { name: "Home" };
+  }
+
+  return true;
 });
 
 export default router;
