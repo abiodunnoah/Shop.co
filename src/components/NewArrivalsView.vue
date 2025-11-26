@@ -1,11 +1,6 @@
 <script setup>
 import products from "@/data/products.js";
-// import { onMounted } from "vue";
-// import { useProductStore } from "@/stores/productStore";
 
-// const store = useProductStore();
-
-// split into two groups
 const newArrivals = products.slice(0, 4);
 const topSelling = products.slice(4, 8);
 
@@ -62,11 +57,11 @@ const topSelling = products.slice(4, 8);
   <section class="item-section-2">
     <h2 class="section-title cursor-pointer">TOP SELLING</h2>
     <div class="grid">
-      <div
+      <router-link
         v-for="prod in topSelling"
         :key="prod.id"
+        :to="{ name: 'ProductDetail', params: { id: prod.id } }"
         class="card__item cursor-pointer"
-        @click="goToDetail(prod.id)"
       >
         <img :src="prod.image" :alt="prod.name" class="card__image" />
         <h3 class="card__name">{{ prod.name }}</h3>
@@ -94,7 +89,7 @@ const topSelling = products.slice(4, 8);
             -{{ Math.round((1 - prod.priceCurrent / prod.priceOriginal) * 100) }}%
           </span>
         </div>
-      </div>
+      </router-link>
     </div>
     <div class="view-all-wrapper">
       <button class="btn-outline">View All</button>

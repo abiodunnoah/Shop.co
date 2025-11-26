@@ -1,6 +1,3 @@
-// src/data/products.js
-
-// import your images once
 import cloth1 from "@/assets/images/cloth 1.png";
 import cloth2 from "@/assets/images/cloth 2.png";
 import cloth3 from "@/assets/images/cloth 3.png";
@@ -13,6 +10,7 @@ import blackStriped from "@/assets/images/Polo with Contrast Trims.png";
 import poloWthContrastTrims from "@/assets/images/Gradient Graphic T-shirt.png";
 import poloWithTipping from "@/assets/images/Polo with Tipping Details.png";
 import gradientGraphicTshirt from "@/assets/images/Black Striped T-shirt.png";
+import tsFront from "@/assets/images/ts-front.png";
 
 export default [
   {
@@ -128,15 +126,16 @@ export default [
     rating: 5,
     date: "2025-06-15",
   },
-  // {
-  //   id: 8,
-  //   name: "Faded Skinny Jeans",
-  //   image: cloth8,
-  //   category: "casual",
-  //   priceCurrent: 210,
-  //   rating: 4.5,
-  //   date: "2025-06-08",
-  // },
+  {
+    id: 13,
+    name: "ONE LIFE GRAPHIC T-SHIRT",
+    image: tsFront,
+    category: "t-shirts",
+    priceCurrent: 260,
+    priceOriginal: 300,
+    rating: 4.5,
+    date: "2025-07-02",
+  },
   // {
   //   id: 9,
   //   name: "Polo with Contrast Trims",

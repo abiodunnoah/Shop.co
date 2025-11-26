@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch, toRef } from "vue";
 
 import ProductGallery from "@/components/ProductGallery.vue";
 import Rating from "@/components/RatingView.vue";
@@ -23,6 +23,31 @@ const quantity = ref(1);
 const activeTab = ref(0);
 const sortOrder = ref("latest");
 
+const productRef = toRef(props, "product");
+
+watch(
+  productRef,
+  (prod) => {
+    if (!prod) return;
+    if (Array.isArray(prod.colors) && prod.colors.length > 0) {
+      const firstColor = prod.colors[0];
+      selectedColor.value =
+        typeof firstColor === "string" ? firstColor : firstColor.name ?? firstColor;
+    } else {
+      selectedColor.value = "default";
+    }
+
+    if (Array.isArray(prod.sizes) && prod.sizes.length > 0) {
+      const firstSize = prod.sizes[0];
+      selectedSize.value = typeof firstSize === "string" ? firstSize : firstSize.label ?? firstSize;
+    } else {
+      selectedSize.value = "one-size";
+    }
+    currentImage.value = 0;
+  },
+  { immediate: true }
+);
+
 function emitAddToCart() {
   emit("add-to-cart", {
     size: selectedSize.value,
@@ -33,10 +58,10 @@ function emitAddToCart() {
 </script>
 
 <template>
-  <div class="info-section">
+  <div v-if="product" class="info-section">
     <!-- Gallery + Swatches + Price/Selectors -->
     <div class="top">
-      <ProductGallery :images="product.images" v-model:currentImage="currentImage" />
+      <ProductGallery :images="product.images || []" v-model:currentImage="currentImage" />
       <div class="details">
         <h1 class="product-name">{{ product.name }}</h1>
         <Rating :value="product.rating" />
@@ -50,10 +75,10 @@ function emitAddToCart() {
         </div>
 
         <h4 class="select-color">Select Colors</h4>
-        <ColorSwatches :colors="product.colors" v-model:selected="selectedColor" />
+        <ColorSwatches :colors="product.colors || []" v-model:selected="selectedColor" />
 
         <h4 class="size-selection">Choose Size</h4>
-        <SizeSelector :sizes="product.sizes" v-model:selected="selectedSize" />
+        <SizeSelector :sizes="product.sizes || []" v-model:selected="selectedSize" />
 
         <div class="buy-row">
           <QuantitySelector v-model="quantity" />
@@ -72,6 +97,10 @@ function emitAddToCart() {
       />
     </TabPanel>
   </div>
+
+  <template v-else>
+    <p>Loading product...</p>
+  </template>
 </template>
 
 <style scoped>

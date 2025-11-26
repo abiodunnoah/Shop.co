@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watchEffect } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "@/stores/cartStore";
 import SignupBonus from "@/components/SignupBonus.vue";
@@ -86,7 +86,7 @@ function clearPromo() {
 }
 
 function goToCheckout() {
-  router.push({ name: "Checkout" });
+  router.push({ name: "CheckoutPage" });
 }
 
 function continueShopping() {

@@ -1,6 +1,6 @@
 <script setup>
 import productDetail from "@/data/productDetail";
-
+import { computed } from "vue";
 import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
 import ProductInfoSection from "@/components/ProductInfoSection.vue";
@@ -10,18 +10,25 @@ import { useCartStore } from "@/stores/cartStore";
 
 const cart = useCartStore();
 
-const pd = productDetail;
-
-defineProps({
+const props = defineProps({
   id: { type: [String, Number], required: true },
+});
+
+const pd = computed(() => {
+  const found = productDetail.find((p) => p.id.toString() === props.id.toString());
+  if (!found) {
+    console.warn(`Product with id ${props.id} not found; falling back to first product.`);
+    return productDetail[0] ?? null;
+  }
+  return found;
 });
 
 function onAddToCart({ size, color, quantity }) {
   const productSnapshot = {
-    id: pd.id,
-    name: pd.name,
-    price: pd.price ?? pd.priceCurrent ?? pd.priceCurrent ?? 0,
-    image: pd.images && pd.images[0] ? pd.images[0] : pd.images ?? "",
+    id: pd.value.id,
+    name: pd.value.name,
+    price: pd.value.price ?? pd.value.priceCurrent ?? 0,
+    image: (pd.value.images && pd.value.images[0]) || pd.value.images || "",
   };
   cart.addToCart(productSnapshot, { size, color, quantity });
 }
@@ -42,12 +49,18 @@ function onLoadMoreReviews() {
   </header>
 
   <main class="product-detail-page">
-    <ProductInfoSection
-      :product="pd"
-      @add-to-cart="onAddToCart"
-      @write-review="onWriteReview"
-      @load-more-reviews="onLoadMoreReviews"
-    />
+    <template v-if="pd">
+      <ProductInfoSection
+        :product="pd"
+        @add-to-cart="onAddToCart"
+        @write-review="onWriteReview"
+        @load-more-reviews="onLoadMoreReviews"
+      />
+    </template>
+
+    <template v-else>
+      <p>Product not found.</p>
+    </template>
     <MightLike />
   </main>
   <FooterView />

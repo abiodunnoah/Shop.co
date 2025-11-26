@@ -37,6 +37,12 @@ const router = createRouter({
       props: true,
     },
     {
+      path: "/checkout",
+      name: "CheckoutPage",
+      component: () => import("../views/CheckoutPage.vue"),
+      meta: { requiresAuth: true },
+    },
+    {
       path: "/login",
       name: "Login",
       component: () => import("@/views/SignIn.vue"),
@@ -50,6 +56,21 @@ const router = createRouter({
     },
     { path: "/:pathMatch(.*)*", redirect: "/" },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    // if browser provides saved position (back/forward), use it
+    if (savedPosition) {
+      return savedPosition;
+    }
+
+    // if the route has a hash (anchor), scroll to that element
+    if (to.hash) {
+      // optional offset for fixed header: { top: 100 }
+      return { el: to.hash, top: 0 };
+    }
+
+    // default: scroll to top
+    return { left: 0, top: 0 };
+  },
 });
 
 router.beforeEach(async (to) => {

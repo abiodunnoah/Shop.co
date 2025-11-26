@@ -129,7 +129,10 @@ async function logoutUser() {
       >
         <img :src="MenuIcon" alt="Menu" class="w-6 h-6" />
       </button>
-      <h1>SHOP.CO</h1>
+
+      <router-link to="/">
+        <h1>SHOP.CO</h1>
+      </router-link>
     </div>
 
     <div class="links hidden md:flex">
