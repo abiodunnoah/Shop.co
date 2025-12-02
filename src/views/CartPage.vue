@@ -32,7 +32,7 @@ const total = computed(() => {
 });
 
 function fmtCurrency(v) {
-  return `$${Number(v).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+  return `₦${Number(v).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
 }
 
 function increaseQty(item) {

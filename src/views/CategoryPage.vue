@@ -14,7 +14,7 @@ const router = useRouter();
 const categoryLabel = computed(() => category.charAt(0).toUpperCase() + category.slice(1));
 
 const page = ref(1);
-const perPage = 10;
+const perPage = 20;
 const sortOrder = ref("popular");
 const total = ref(0);
 const products = ref([]);
@@ -41,7 +41,7 @@ function fetchProducts() {
   products.value = list.slice(startIdx, startIdx + perPage);
 }
 
-function applyFilters(filters) {
+function applyFilters() {
   page.value = 1;
   fetchProducts();
 }

@@ -49,8 +49,8 @@ function goToDetail(id) {
         </div>
 
         <div class="card__price">
-          <span class="price-current">${{ prod.priceCurrent }}</span>
-          <span v-if="prod.priceOriginal" class="price-original"> ${{ prod.priceOriginal }} </span>
+          <span class="price-current">₦{{ prod.priceCurrent }}</span>
+          <span v-if="prod.priceOriginal" class="price-original"> ₦{{ prod.priceOriginal }} </span>
           <span v-if="prod.priceOriginal" class="badge">
             -{{ Math.round((1 - prod.priceCurrent / prod.priceOriginal) * 100) }}%
           </span>

@@ -16,8 +16,8 @@ const props = defineProps({
 
 <template>
   <div class="price-display">
-    <span class="current">${{ price }}</span>
-    <span v-if="original" class="original">${{ original }}</span>
+    <span class="current">₦{{ price }}</span>
+    <span v-if="original" class="original">₦{{ original }}</span>
     <span v-if="original" class="discount">-{{ discountPercent }}%</span>
   </div>
 </template>

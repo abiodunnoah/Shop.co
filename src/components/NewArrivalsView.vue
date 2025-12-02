@@ -1,12 +1,31 @@
 <script setup>
 import products from "@/data/products.js";
 
-const newArrivals = products.slice(0, 4);
-const topSelling = products.slice(4, 8);
+function pickTopN(flag, sorter, n = 4) {
+  const matched = products.filter((p) => !!p[flag]).slice();
+  matched.sort(sorter);
 
-// onMounted(async () => {
-//   await store.fetchProducts();
-// });
+  if (matched.length >= n) return matched.slice(0, n);
+
+  // fill with non-matched items (avoid duplicates)
+  const filler = products
+    .filter((p) => !matched.some((m) => m.id === p.id))
+    .slice(0, n - matched.length);
+  return matched.concat(filler);
+}
+
+// New arrivals = newest by date
+const newArrivals = pickTopN("isNew", (a, b) => new Date(b.date) - new Date(a.date), 4);
+
+// Top selling = highest rating
+const topSelling = pickTopN(
+  "isTop",
+  (a, b) => {
+    if (b.rating !== a.rating) return b.rating - a.rating;
+    return new Date(b.date) - new Date(a.date);
+  },
+  4
+);
 </script>
 
 <template>
@@ -28,20 +47,17 @@ const topSelling = products.slice(4, 8);
             v-for="n in 5"
             :key="n"
             class="star"
-            :class="{
-              'text-gray-300': n > Math.floor(prod.rating),
-              half: n === Math.ceil(prod.rating) && prod.rating % 1 !== 0,
-            }"
+            :class="{ 'text-gray-300': n > Math.floor(prod.rating) }"
             >★</span
           >
-          <span class="rating-text">
-            {{ prod.rating }}/<span class="total-rating-text">5</span>
-          </span>
+          <span class="rating-text"
+            >{{ prod.rating }}/<span class="total-rating-text">5</span></span
+          >
         </div>
 
         <div class="card__price">
-          <span class="price-current">${{ prod.priceCurrent }}</span>
-          <span v-if="prod.priceOriginal" class="price-original"> ${{ prod.priceOriginal }} </span>
+          <span class="price-current">₦{{ prod.priceCurrent }}</span>
+          <span v-if="prod.priceOriginal" class="price-original"> ₦{{ prod.priceOriginal }} </span>
           <span v-if="prod.priceOriginal" class="badge">
             -{{ Math.round((1 - prod.priceCurrent / prod.priceOriginal) * 100) }}%
           </span>
@@ -49,7 +65,7 @@ const topSelling = products.slice(4, 8);
       </router-link>
     </div>
     <div class="view-all-wrapper">
-      <button class="btn-outline">View All</button>
+      <router-link :to="{ name: 'NewArrivals' }" class="btn-outline">View All</router-link>
     </div>
   </section>
 
@@ -83,8 +99,8 @@ const topSelling = products.slice(4, 8);
         </div>
 
         <div class="card__price">
-          <span class="price-current">${{ prod.priceCurrent }}</span>
-          <span v-if="prod.priceOriginal" class="price-original"> ${{ prod.priceOriginal }} </span>
+          <span class="price-current">₦{{ prod.priceCurrent }}</span>
+          <span v-if="prod.priceOriginal" class="price-original"> ₦{{ prod.priceOriginal }} </span>
           <span v-if="prod.priceOriginal" class="badge">
             -{{ Math.round((1 - prod.priceCurrent / prod.priceOriginal) * 100) }}%
           </span>
@@ -92,7 +108,7 @@ const topSelling = products.slice(4, 8);
       </router-link>
     </div>
     <div class="view-all-wrapper">
-      <button class="btn-outline">View All</button>
+      <router-link :to="{ name: 'TopSelling' }" class="btn-outline">View All</router-link>
     </div>
   </section>
 </template>
@@ -131,9 +147,11 @@ const topSelling = products.slice(4, 8);
 
 .card__image {
   width: 100%;
+  height: 250px;
   border-radius: 0.75rem;
-  object-fit: contain;
+  object-fit: cover;
   margin-bottom: 0.75rem;
+  border-radius: 20px;
 }
 
 .card__name {

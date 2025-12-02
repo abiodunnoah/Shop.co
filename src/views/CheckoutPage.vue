@@ -1,7 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
 import { NSpin } from "naive-ui";
-import { useRouter } from "vue-router";
 import { useCartStore } from "@/stores/cartStore";
 import { useAuthStore } from "@/stores/authStore";
 
@@ -10,11 +9,10 @@ import NavBar from "@/components/NavBar.vue";
 
 const auth = useAuthStore();
 const cart = useCartStore();
-const router = useRouter();
 
 const form = ref({
   name: "",
-  email: "",
+  email: auth.user?.email ?? "",
   phone: "",
   address: "",
   city: "",
@@ -51,12 +49,18 @@ function itemSubtotal(item) {
   return (Number(item.price) || 0) * (Number(item.quantity) || 0);
 }
 
+const shippingText = computed(() => {
+  if (!items.value || items.value.length === 0) return "-";
+  return "₦1,500";
+});
+
 const shippingAmount = computed(() => {
   if (!items.value || items.value.length === 0) return "-";
-  return 1;
+  return 1500;
 });
 
 const grandTotal = computed(() => {
+  if (!items.value || items.value.length === 0) return 0;
   return (subtotal.value || 0) + shippingAmount.value;
 });
 
@@ -238,7 +242,7 @@ async function onPay() {
               </div>
             </div>
 
-            <div class="font-semibold">${{ itemSubtotal(item) }}</div>
+            <div class="font-semibold">₦{{ itemSubtotal(item) }}</div>
           </li>
 
           <li v-if="items.length === 0" class="text-sm text-gray-600">Your cart is empty</li>
@@ -247,11 +251,17 @@ async function onPay() {
         <div class="border-t pt-3 space-y-2 mt-4">
           <div class="flex justify-between text-sm mb-1">
             <span>Subtotal</span>
-            <span>${{ subtotal }}</span>
+            <span>₦{{ subtotal }}</span>
           </div>
 
           <div class="flex justify-between text-sm mb-1">
+            <span>Shipping</span>
             <span>{{ shippingText }}</span>
+          </div>
+
+          <div class="flex justify-between text-sm">
+            <span>Total</span>
+            <span>₦{{ grandTotal }}</span>
           </div>
         </div>
 

@@ -13,10 +13,13 @@ import blackStriped from "@/assets/images/Polo with Contrast Trims.png";
 import poloWthContrastTrims from "@/assets/images/Gradient Graphic T-shirt.png";
 import poloWithTipping from "@/assets/images/Polo with Tipping Details.png";
 import gradientGraphicTshirt from "@/assets/images/Black Striped T-shirt.png";
+import relaxedOversizedTee from "@/assets/images/Relaxed Oversized Tee.jpeg";
+import stripedSummerPolo from "@/assets/images/Striped Summer Polo.jpg";
+import denimOvershirt from "@/assets/images/Denim Overshirt.jpeg";
 
 export default [
   {
-    id: "abc123",
+    id: 1,
     category: "t-shirts",
     name: "ONE LIFE GRAPHIC T-SHIRT",
     rating: 4.5,
@@ -97,7 +100,7 @@ export default [
     ],
   },
   {
-    id: 1,
+    id: 2,
     category: "casual",
     name: "T-shirt with Tape Details",
     rating: 4.5,
@@ -153,7 +156,7 @@ export default [
   },
 
   {
-    id: 2,
+    id: 3,
     category: "casual",
     name: "Skinny Fit Jeans",
     rating: 3.5,
@@ -202,7 +205,7 @@ export default [
   },
 
   {
-    id: 3,
+    id: 4,
     category: "formal",
     name: "Checkered Shirt",
     rating: 4.5,
@@ -251,7 +254,7 @@ export default [
   },
 
   {
-    id: 4,
+    id: 5,
     category: "casual",
     name: "Sleeve Striped T-shirt",
     rating: 4.5,
@@ -297,7 +300,7 @@ export default [
   },
 
   {
-    id: 5,
+    id: 6,
     category: "formal",
     name: "Vertical Stripped Shirt",
     rating: 5.0,
@@ -343,7 +346,7 @@ export default [
   },
 
   {
-    id: 6,
+    id: 7,
     category: "casual",
     name: "Courage Graphic T-shirt",
     rating: 4.0,
@@ -390,7 +393,7 @@ export default [
   },
 
   {
-    id: 7,
+    id: 8,
     category: "sportswear",
     name: "Loose Fit Bermuda Shorts",
     rating: 3.0,
@@ -436,7 +439,7 @@ export default [
   },
 
   {
-    id: 8,
+    id: 9,
     category: "casual",
     name: "Faded Skinny Jeans",
     rating: 4.5,
@@ -485,7 +488,7 @@ export default [
   },
 
   {
-    id: 9,
+    id: 10,
     category: "casual",
     name: "Polo with Contrast Trims",
     rating: 4.0,
@@ -531,7 +534,7 @@ export default [
   },
 
   {
-    id: 10,
+    id: 11,
     category: "casual",
     name: "Gradient Graphic T-shirt",
     rating: 3.5,
@@ -577,7 +580,7 @@ export default [
   },
 
   {
-    id: 11,
+    id: 12,
     category: "formal",
     name: "Polo with Tipping Details",
     rating: 4.5,
@@ -626,7 +629,7 @@ export default [
   },
 
   {
-    id: 12,
+    id: 13,
     category: "casual",
     name: "Black Striped T-shirt",
     rating: 5,
@@ -669,5 +672,184 @@ export default [
       },
     ],
     date: "2025-06-15",
+  },
+  {
+    id: 14,
+    category: "casual",
+    name: "Relaxed Oversized Tee",
+    rating: 4.2,
+    priceCurrent: 140,
+    priceOriginal: 180,
+    discountPercent: 22,
+    description:
+      "A soft, relaxed-fit oversized tee cut for effortless styling. Breathable cotton blend, dropped shoulders and a slightly longer hem for modern layering. Perfect for casual days and streetwear looks.",
+    colors: [
+      { name: "Cloud White", hex: "#F7F7F7" },
+      { name: "Sand", hex: "#D9C6AA" },
+      { name: "Charcoal", hex: "#2F2F2F" },
+    ],
+    sizes: [
+      { label: "Small", inStock: true },
+      { label: "Medium", inStock: true },
+      { label: "Large", inStock: true },
+      { label: "X-Large", inStock: true },
+    ],
+    images: [relaxedOversizedTee],
+    faqs: [
+      { q: "What’s the fabric?", a: "60% cotton, 40% modal for extra softness." },
+      { q: "Is it pre-shrunk?", a: "Yes — minimal shrinkage when washed per care instructions." },
+      {
+        q: "How does it fit?",
+        a: "Designed oversized — if you prefer a regular fit, size down one.",
+      },
+    ],
+    reviews: [
+      {
+        id: 1,
+        author: "Nora A.",
+        rating: 5,
+        date: "2025-07-12",
+        text: "Lovely fabric and great cut. Oversized but still looks tidy — great for layering.",
+        verified: true,
+      },
+      {
+        id: 2,
+        author: "Sam T.",
+        rating: 4,
+        date: "2025-07-13",
+        text: "Comfy and soft. I sized down to medium and it fits perfectly.",
+        verified: false,
+      },
+      {
+        id: 3,
+        author: "Ibrahim K.",
+        rating: 4,
+        date: "2025-07-14",
+        text: "Good value for the price. Color is slightly lighter in person than on screen.",
+        verified: true,
+      },
+    ],
+    date: "2025-07-10",
+  },
+
+  {
+    id: 15,
+    category: "casual",
+    name: "Striped Summer Polo",
+    rating: 4.6,
+    priceCurrent: 195,
+    priceOriginal: 245,
+    discountPercent: 20,
+    description:
+      "A lightweight polo built for warm days — breathable piqué knit with tonal stripes and a soft ribbed collar. Smart-casual by design, it pairs well with chinos or denim.",
+    colors: [
+      { name: "Navy / Cream", hex: "#0F2B4C" },
+      { name: "Stone / White", hex: "#E6E1D6" },
+      { name: "Olive / Beige", hex: "#58634A" },
+    ],
+    sizes: [
+      { label: "Small", inStock: true },
+      { label: "Medium", inStock: true },
+      { label: "Large", inStock: true },
+      { label: "X-Large", inStock: false },
+    ],
+    images: [stripedSummerPolo],
+    faqs: [
+      { q: "What fabric is used?", a: "100% premium cotton piqué." },
+      { q: "Are buttons reinforced?", a: "Yes — corozo-style buttons with reinforced stitching." },
+      { q: "Can I iron it?", a: "Yes, iron on low-medium heat; avoid high heat on ribbing." },
+    ],
+    reviews: [
+      {
+        id: 1,
+        author: "Kemi O.",
+        rating: 5,
+        date: "2025-07-09",
+        text: "Smart look and breathable — wore it for a weekend outing and got lots of compliments.",
+        verified: true,
+      },
+      {
+        id: 2,
+        author: "Daniel R.",
+        rating: 4.5,
+        date: "2025-07-10",
+        text: "Great quality. Slightly slimmer than expected — I recommend checking the size guide.",
+        verified: true,
+      },
+      {
+        id: 3,
+        author: "Yusuf H.",
+        rating: 4,
+        date: "2025-07-11",
+        text: "Nice fabric, good weight for summer evenings. Color stayed after wash.",
+        verified: false,
+      },
+    ],
+    date: "2025-07-08",
+  },
+
+  {
+    id: 16,
+    category: "formal",
+    name: "Denim Overshirt",
+    rating: 4.8,
+    priceCurrent: 320,
+    priceOriginal: 400,
+    discountPercent: 20,
+    description:
+      "A tailored denim overshirt crafted from rigid-wash denim with refined stitching and classic chest pockets. Wear it as a lightweight jacket or layered over shirts for a clean, elevated look.",
+    colors: [
+      { name: "Indigo", hex: "#1F3B63" },
+      { name: "Mid Wash", hex: "#4B6A8A" },
+      { name: "Black Wash", hex: "#1E1E1E" },
+    ],
+    sizes: [
+      { label: "Small", inStock: false },
+      { label: "Medium", inStock: true },
+      { label: "Large", inStock: true },
+      { label: "X-Large", inStock: true },
+    ],
+    images: [denimOvershirt],
+    faqs: [
+      {
+        q: "Is the denim rigid or stretch?",
+        a: "Rigid denim with a small amount of finishing for comfort.",
+      },
+      {
+        q: "How should I care for it?",
+        a: "Wash inside out, cold wash, hang to dry to preserve color.",
+      },
+      {
+        q: "Does it run true to size?",
+        a: "Yes — fits true to size; choose outerwear size if layering thicker knits.",
+      },
+    ],
+    reviews: [
+      {
+        id: 1,
+        author: "Tunde M.",
+        rating: 5,
+        date: "2025-07-01",
+        text: "Top-quality denim and clean finishing. Strongly recommend if you want a staple layering piece.",
+        verified: true,
+      },
+      {
+        id: 2,
+        author: "Grace L.",
+        rating: 4.5,
+        date: "2025-07-02",
+        text: "Stylish and versatile. Slightly heavy for very hot days but perfect for evenings.",
+        verified: true,
+      },
+      {
+        id: 3,
+        author: "Peter S.",
+        rating: 4.5,
+        date: "2025-07-03",
+        text: "Excellent cut and very durable. The black wash looks very modern.",
+        verified: false,
+      },
+    ],
+    date: "2025-06-30",
   },
 ];

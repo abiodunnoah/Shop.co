@@ -32,8 +32,8 @@ defineProps({
       </div>
 
       <div class="price">
-        <span class="current">${{ product.priceCurrent }}</span>
-        <span v-if="product.priceOriginal" class="original"> ${{ product.priceOriginal }} </span>
+        <span class="current">₦{{ product.priceCurrent }}</span>
+        <span v-if="product.priceOriginal" class="original"> ₦{{ product.priceOriginal }} </span>
         <span v-if="product.priceOriginal" class="badge">
           -{{ Math.round((1 - product.priceCurrent / product.priceOriginal) * 100) }}%
         </span>

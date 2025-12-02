@@ -54,6 +54,17 @@ const router = createRouter({
       component: () => import("@/views/SignUp.vue"),
       meta: { requiresGuest: true },
     },
+    {
+      path: "/products/new-arrivals",
+      name: "NewArrivals",
+      component: () => import("@/views/NewArrivalsPage.vue"),
+    },
+    {
+      path: "/products/top-selling",
+      name: "TopSelling",
+      component: () => import("@/views/TopSellingPage.vue"),
+    },
+
     { path: "/:pathMatch(.*)*", redirect: "/" },
   ],
   scrollBehavior(to, from, savedPosition) {
