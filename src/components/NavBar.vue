@@ -7,6 +7,7 @@ import SearchBar from "@/assets/icons/SearchIcon.png";
 import cartIcon from "@/assets/icons/cart.png";
 import Avatar from "@/assets/icons/avatar.svg";
 import MenuIcon from "@/assets/icons/menu.png";
+import { nextTick } from "vue";
 
 const auth = useAuthStore();
 const cart = useCartStore();
@@ -15,6 +16,7 @@ const router = useRouter();
 const searchInput = ref("");
 const menuOpen = ref(false);
 const searchOpen = ref(false);
+const searchInputRef = ref(null);
 
 const userMenuOpen = ref(false);
 const isLoggingOut = ref(false);
@@ -26,7 +28,6 @@ const categories = [
   { label: "Formal", slug: "formal" },
   { label: "T‑shirts", slug: "t-shirts" },
   { label: "Jeans", slug: "jeans" },
-  { label: "Formal", slug: "formal" },
   { label: "Sportswear", slug: "sportswear" },
   { label: "Accessories", slug: "accessories" },
 ];
@@ -81,41 +82,49 @@ async function logoutUser() {
   }
 }
 
-// const searchInputRef = ref(null);
+function navigateToShop(q) {
+  const trimmed = (q || "").trim();
 
-// async function openSearchModal() {
-//   searchOpen.value = true;
-//   await nextTick();
-//   searchInputRef.value?.focus?.();
-// }
+  const target = trimmed
+    ? { name: "ShopOverview", query: { q: trimmed } }
+    : { name: "ShopOverview", query: {} };
 
-// function closeSearchModal() {
-//   searchOpen.value = false;
-//   searchOpen.value = "";
-// }
+  const cur = router.currentRoute.value;
+  const sameRoute =
+    cur.name === target.name && JSON.stringify(cur.query) === JSON.stringify(target.query || {});
 
-// async function onSearchEnter() {
-//   const q = (searchInput.value || "").trim();
+  if (sameRoute) return;
 
-//   if (!q) return;
-//   try {
-//     await productStore.fetchProducts(q, { limit: 20 });
-//   } catch (err) {
-//     console.error("Search failed", err);
+  router.replace(target).catch(() => {});
+}
+
+function onSearchIconClick() {
+  if (!searchOpen.value) {
+    searchOpen.value = true;
+
+    nextTick(() => {
+      searchInputRef.value?.focus?.();
+    });
+    return;
+  }
+}
+
+// function submitSearch() {
+//   const trimmed = (searchInput.value || "").trim();
+//   if (!trimmed) {
+//     router.push({ name: "ShopOverview", query: {} }).catch(() => {});
+//     return;
 //   }
+//   router.push({ name: "ShopOverview", query: { q: trimmed } }).catch(() => {});
 // }
 
-// function handleKeydown(e) {
-//   if (e.key === "Escape" && searchOpen.value) closeSearchModal();
-// }
+function submitSearch() {
+  navigateToShop(searchInput.value);
+}
 
-// onMounted(() => {
-//   document.addEventListener("keydown", handleKeydown);
-// });
-
-// onBeforeMount(() => {
-//   document.addEventListener("keydown", handleKeydown);
-// });
+function goWithQuery(q) {
+  navigateToShop(q);
+}
 </script>
 
 <template>
@@ -143,9 +152,11 @@ async function logoutUser() {
           </option>
         </select>
       </div>
-      <p>On Sales</p>
-      <p>New Arrival</p>
-      <p>Brands</p>
+      <!-- <router-link class="cursor-pointer mr-5">Brands</router-link> -->
+      <router-link :to="{ name: 'NewArrivals' }" class="cursor-pointer mr-5"
+        >New Arrivals</router-link
+      >
+      <router-link :to="{ name: 'TopSelling' }" class="cursor-pointer">Top Selling</router-link>
     </div>
 
     <!-- 3️⃣ Mobile dropdown -->
@@ -156,44 +167,42 @@ async function logoutUser() {
       class="mobile-links absolute top-full left-0 mt-1 bg-white shadow-lg rounded-lg py-2 px-3 w-40 z-20"
     >
       <p class="px-4 py-2 hover:bg-gray-100">Shop</p>
-      <p class="px-4 py-2 hover:bg-gray-100">On Sales</p>
-      <p class="px-4 py-2 hover:bg-gray-100">New Arrival</p>
-      <p class="px-4 py-2 hover:bg-gray-100">Brands</p>
+      <!-- <p class="px-4 py-2 hover:bg-gray-100">Brands</p> -->
+      <p class="px-4 py-2 hover:bg-gray-100">
+        <router-link :to="{ name: 'NewArrivals' }">New Arrivals</router-link>
+      </p>
+      <p class="px-4 py-2 hover:bg-gray-100">
+        <router-link :to="{ name: 'TopSelling' }">Top Selling</router-link>
+      </p>
     </div>
 
-    <!-- 4️⃣ Search + Cart + Avatar -->
     <div class="flex items-center gap-4">
       <div class="search relative">
-        <button type="button" class="p-1 z-20" @click="toggleSearch">
+        <button
+          type="button"
+          class="p-1 z-20"
+          @click="searchOpen ? submitSearch() : toggleSearch()"
+          aria-label="Toggle search"
+        >
           <img :src="SearchBar" alt="Search Icon" class="search__icon" />
         </button>
+
         <input
           v-model="searchInput"
+          @keyup.enter="submitSearch"
           v-show="searchOpen"
           type="search"
           placeholder="Search for products..."
           class="search-input md:block focus:outline-none w-40 sm:w-52 md:w-48 lg:w-100 px-4 py-2 flex-shrink-0"
         />
       </div>
+
       <div class="cart">
         <router-link to="/cart" class="cart-link">
           <img :src="cartIcon" alt="Cart Icon" class="cart__icon" />
           <span v-if="cart.totalItems > 0" class="badge">{{ cart.totalItems }}</span>
         </router-link>
       </div>
-
-      <!-- <template v-if="auth.user">
-        <img
-          src="https://img.freepik.com/premium-psd/smiling-3d-cartoon-man_975163-762.jpg?w=826"
-          class="w-5 h-5 rounded-full"
-        />
-      </template>
-
-      <template v-else>
-        <router-link to="/login">
-          <img :src="Avatar" alt="User Avatar" class="avatar__icon" />
-        </router-link>
-      </template> -->
 
       <template v-if="auth.user">
         <div class="user-wrapper relative" ref="userMenuRef">

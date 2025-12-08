@@ -49,6 +49,12 @@ function onLoadMoreReviews() {
   </header>
 
   <main class="product-detail-page">
+    <nav class="text-sm text-gray-600 mb-4" aria-label="breadcrumb">
+      <router-link to="/" class="hover:underline">Home</router-link>
+      <span class="mx-2">›</span>
+      <span class="font-semibold">Details</span>
+    </nav>
+
     <template v-if="pd">
       <ProductInfoSection
         :product="pd"

@@ -64,6 +64,11 @@ const router = createRouter({
       name: "TopSelling",
       component: () => import("@/views/TopSellingPage.vue"),
     },
+    {
+      path: "/products",
+      name: "ShopOverview",
+      component: () => import("../views/ShopOverview.vue"),
+    },
 
     { path: "/:pathMatch(.*)*", redirect: "/" },
   ],
