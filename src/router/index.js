@@ -69,6 +69,11 @@ const router = createRouter({
       name: "ShopOverview",
       component: () => import("../views/ShopOverview.vue"),
     },
+    {
+      path: "/payment-success",
+      name: "PaymentSuccess",
+      component: () => import("@/views/PaymentSuccess.vue"),
+    },
 
     { path: "/:pathMatch(.*)*", redirect: "/" },
   ],

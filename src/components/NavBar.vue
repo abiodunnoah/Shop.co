@@ -85,9 +85,11 @@ async function logoutUser() {
 function navigateToShop(q) {
   const trimmed = (q || "").trim();
 
-  const target = trimmed
-    ? { name: "ShopOverview", query: { q: trimmed } }
-    : { name: "ShopOverview", query: {} };
+  if (!trimmed) {
+    return;
+  }
+
+  const target = { name: "ShopOverview", query: { q: trimmed } };
 
   const cur = router.currentRoute.value;
   const sameRoute =
@@ -107,23 +109,16 @@ function onSearchIconClick() {
     });
     return;
   }
+  const trimmed = (searchInput.value || "").trim();
+  if (trimmed) {
+    navigateToShop(trimmed);
+  } else {
+    searchOpen.value = false;
+  }
 }
-
-// function submitSearch() {
-//   const trimmed = (searchInput.value || "").trim();
-//   if (!trimmed) {
-//     router.push({ name: "ShopOverview", query: {} }).catch(() => {});
-//     return;
-//   }
-//   router.push({ name: "ShopOverview", query: { q: trimmed } }).catch(() => {});
-// }
 
 function submitSearch() {
   navigateToShop(searchInput.value);
-}
-
-function goWithQuery(q) {
-  navigateToShop(q);
 }
 </script>
 
@@ -181,13 +176,14 @@ function goWithQuery(q) {
         <button
           type="button"
           class="p-1 z-20"
-          @click="searchOpen ? submitSearch() : toggleSearch()"
+          @click="onSearchIconClick"
           aria-label="Toggle search"
         >
           <img :src="SearchBar" alt="Search Icon" class="search__icon" />
         </button>
 
         <input
+          ref="searchInputRef"
           v-model="searchInput"
           @keyup.enter="submitSearch"
           v-show="searchOpen"
@@ -226,7 +222,7 @@ function goWithQuery(q) {
             role="menu"
             aria-label="User menu"
           >
-            <router-link
+            <!-- <router-link
               to="/account"
               class="menu-item block px-4 py-2 text-sm hover:bg-gray-100"
               role="menuitem"
@@ -240,7 +236,7 @@ function goWithQuery(q) {
               role="menuitem"
             >
               Orders
-            </router-link>
+            </router-link> -->
 
             <button
               class="menu-item block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"

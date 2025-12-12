@@ -6,9 +6,11 @@ import { useAuthStore } from "@/stores/authStore";
 
 import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
+import router from "@/router";
 
 const auth = useAuthStore();
 const cart = useCartStore();
+// const VITE_PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || "";
 
 const form = ref({
   name: "",
@@ -66,6 +68,71 @@ const grandTotal = computed(() => {
 
 const isCartEmpty = computed(() => !items.value || items.value.length === 0);
 
+function loadPaystackScript() {
+  return new Promise((resolve, reject) => {
+    if (window.PaystackPop) return resolve(window.PaystackPop);
+    const s = document.createElement("script");
+    s.src = "https://js.paystack.co/v1/inline.js";
+    s.async = true;
+    s.onload = () => {
+      if (window.PaystackPop) resolve(window.PaystackPop);
+      else reject(new Error("Paystack failed to load"));
+    };
+    s.onerror = () => reject(new Error("Paystack script failed to load"));
+    document.head.appendChild(s);
+  });
+}
+
+function buildOrderObject(reference) {
+  const savedItems = (cart.items || []).map((item) => ({
+    key: item.key,
+    id: item.id ?? null,
+    name: item.name,
+    quantity: item.quantity,
+    price: item.price,
+    size: item.size ?? null,
+    color: item.color ?? null,
+    subtotal: (Number(item.price) || 0) * (Number(item.quantity) || 0),
+    image: item.image ?? null,
+  }));
+
+  return {
+    reference,
+    amount: Number(grandTotal.value || 0),
+    subtotal: Number(subtotal.value || 0),
+    shipping: Number(shippingAmount.value || 0),
+    totalItems: Number(totalItems.value || 0),
+    items: savedItems,
+    customer: {
+      name: form.value.name,
+      email: form.value.email,
+      phone: form.value.phone,
+      address: form.value.address,
+      city: form.value.city,
+      postal: form.value.postal,
+      country: form.value.country,
+    },
+    createAt: new Date().toISOString(),
+  };
+}
+
+function generateReference() {
+  const timestamp = Date.now();
+  const randomNum = Math.floor(Math.random() * 1000000);
+  return `ref-${timestamp}-${randomNum}`;
+}
+
+function saveOrderToLocalOrder(order) {
+  try {
+    const raw = localStorage.getItem("orders");
+    const array = raw ? JSON.parse(raw) : [];
+    array.unshift(order);
+    localStorage.setItem("orders", JSON.stringify(array));
+  } catch (err) {
+    console.warn("Saving order failed:", err);
+  }
+}
+
 async function onPay() {
   formError.value = "";
   info.value = "";
@@ -87,15 +154,65 @@ async function onPay() {
     return;
   }
 
-  try {
-    isProcessing.value = true;
+  const amountNaira = Number(grandTotal.value || 0);
+  if (!amountNaira || amountNaira <= 0) {
+    formError.value = "Invalid order amount.";
+    return;
+  }
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    cart.clearCart();
-    info.value = "Payment successful! Your order has been placed.";
-  } catch (error) {
-    formError.value = error?.message || "Payment failed. Please try again.";
-  } finally {
+  isProcessing.value = true;
+
+  try {
+    await loadPaystackScript();
+
+    const refBefore = generateReference();
+
+    const handler = window.PaystackPop.setup({
+      key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
+      email: form.value.email,
+      amount: Math.round(amountNaira * 100),
+      ref: generateReference(),
+      metadata: {
+        custom_fields: [
+          { display_name: "Customer Name", variable_name: "customer_name", value: form.value.name },
+          { display_name: "Items", variable_name: "items", value: String(totalItems.value) },
+        ],
+      },
+      onClose: function () {
+        isProcessing.value = false;
+        formError.value = "Payment window closed before completing payment.";
+      },
+      callback: function (response) {
+        const reference = response?.reference || refBefore;
+        const lastorder = buildOrderObject(reference);
+
+        saveOrderToLocalOrder(lastorder);
+
+        try {
+          cart.clearCart();
+        } catch (error) {
+          console.warn("Failed to clear cart:", error);
+        }
+
+        info.value = `Payment successful! Reference: ${reference}. Thank you!`;
+        isProcessing.value = false;
+
+        try {
+          router.replace({ name: "PaymentSuccess", query: { ref: reference } }).catch((error) => {
+            console.warn("router replace failed:", error);
+            window.location.href = `/payment-success?ref=${encodeURIComponent(reference)}`;
+          });
+        } catch (error) {
+          console.warn("router call failed:", error);
+          window.location.href = `/payment-success?ref=${encodeURIComponent(reference)}`;
+        }
+      },
+    });
+
+    handler.openIframe();
+  } catch (err) {
+    console.error("Paystack error:", err);
+    formError.value = err?.message || "Payment failed to initialize.";
     isProcessing.value = false;
   }
 }
@@ -192,9 +309,9 @@ async function onPay() {
               <template v-else>Pay Now</template>
             </button>
 
-            <button type="button" class="px-3 py-2 border rounded" :disabled="isProcessing">
+            <!-- <button type="button" class="px-3 py-2 border rounded" :disabled="isProcessing">
               Save & continue as guest
-            </button>
+            </button> -->
           </div>
 
           <p v-if="formError" class="text-sm text-red-600 mt-3">{{ formError }}</p>

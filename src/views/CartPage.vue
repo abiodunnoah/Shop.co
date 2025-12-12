@@ -159,12 +159,6 @@ function seedDemoCart() {
     },
   ];
 }
-
-// watchEffect(() => {
-//   console.log("subtotal:", subtotal.value);
-//   console.log("appliedPromo:", appliedPromo.value);
-//   console.log("discountAmount:", discountAmount.value);
-// });
 </script>
 
 <template>
@@ -246,7 +240,7 @@ function seedDemoCart() {
             <div class="row">
               <dt>Discount</dt>
               <dd :class="{ negative: discountAmount > 0 }">
-                <span v-if="discountAmount > 0">-{{ fmtCurrency(discountAmount) }}</span>
+                <span v-if="discountAmount > 0">- {{ fmtCurrency(discountAmount) }}</span>
                 <span v-else>-</span>
               </dd>
             </div>

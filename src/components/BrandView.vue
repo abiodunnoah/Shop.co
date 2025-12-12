@@ -64,7 +64,7 @@ import Calvin from "@/assets/images/calvin.png";
   transition: transform 0.3s ease;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .brand-container {
     height: 100%;
   }
