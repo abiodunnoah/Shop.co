@@ -27,7 +27,7 @@ const categories = [
   { label: "Casual", slug: "casual" },
   { label: "Formal", slug: "formal" },
   { label: "T‑shirts", slug: "t-shirts" },
-  { label: "Jeans", slug: "jeans" },
+  { label: "Jean", slug: "jean" },
   { label: "Sportswear", slug: "sportswear" },
   { label: "Accessories", slug: "accessories" },
 ];
