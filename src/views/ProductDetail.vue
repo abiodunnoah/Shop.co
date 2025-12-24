@@ -1,6 +1,7 @@
 <script setup>
 import productDetail from "@/data/productDetail";
 import { computed } from "vue";
+import { useMessage } from "naive-ui";
 import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
 import ProductInfoSection from "@/components/ProductInfoSection.vue";
@@ -9,6 +10,7 @@ import FooterView from "@/components/FooterView.vue";
 import { useCartStore } from "@/stores/cartStore";
 
 const cart = useCartStore();
+const message = useMessage();
 
 const props = defineProps({
   id: { type: [String, Number], required: true },
@@ -31,6 +33,7 @@ function onAddToCart({ size, color, quantity }) {
     image: (pd.value.images && pd.value.images[0]) || pd.value.images || "",
   };
   cart.addToCart(productSnapshot, { size, color, quantity });
+  message.success("Item added to cart!");
 }
 
 function onWriteReview() {

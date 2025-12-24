@@ -1,9 +1,13 @@
-<script setup></script>
+<script setup>
+import { NMessageProvider } from "naive-ui";
+</script>
 
 <template>
-  <div class="container">
-    <RouterView />
-  </div>
+  <n-message-provider>
+    <div class="container">
+      <RouterView />
+    </div>
+  </n-message-provider>
 </template>
 
 <style scoped>
