@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({ faq: Object });
+defineProps({ faq: Object });
 </script>
 
 <template>

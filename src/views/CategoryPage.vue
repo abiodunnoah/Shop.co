@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
@@ -11,29 +11,35 @@ import allProducts from "@/data/products.js";
 import FilterIcon from "@/assets/icons/FilterIcon.png";
 
 const router = useRouter();
-const categoryLabel = computed(() => category.charAt(0).toUpperCase() + category.slice(1));
 
 const page = ref(1);
 const perPage = 20;
 const sortOrder = ref("popular");
 const total = ref(0);
 const products = ref([]);
+const activePrice = ref(null);
 
 const props = defineProps({
   category: { type: String, required: true },
 });
 
-const category = props.category;
+const category = computed(() => props.category);
+const categoryLabel = computed(() => category.value.charAt(0).toUpperCase() + category.value.slice(1));
 
 const totalPages = computed(() => Math.ceil(total.value / perPage));
 const start = computed(() => (page.value - 1) * perPage + 1);
 const end = computed(() => Math.min(page.value * perPage, total.value));
 
 function fetchProducts() {
-  let list = allProducts.filter((p) => p.category === category);
+  let list = allProducts.filter((p) => p.category === category.value);
 
-  if (sortOrder.value === "price-low") list.sort((a, b) => a.price - b.price);
-  if (sortOrder.value === "price-high") list.sort((a, b) => b.price - a.price);
+  if (activePrice.value) {
+    const { min, max } = activePrice.value;
+    list = list.filter((p) => p.priceCurrent >= min && p.priceCurrent <= max);
+  }
+
+  if (sortOrder.value === "price-low") list.sort((a, b) => a.priceCurrent - b.priceCurrent);
+  if (sortOrder.value === "price-high") list.sort((a, b) => b.priceCurrent - a.priceCurrent);
   if (sortOrder.value === "newest") list.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   total.value = list.length;
@@ -41,10 +47,17 @@ function fetchProducts() {
   products.value = list.slice(startIdx, startIdx + perPage);
 }
 
-function applyFilters() {
+function applyFilters(filters) {
+  if (filters && filters.price) activePrice.value = filters.price;
   page.value = 1;
   fetchProducts();
 }
+
+watch(category, () => {
+  page.value = 1;
+  activePrice.value = null;
+  fetchProducts();
+});
 
 function goToDetail(id) {
   router.push({ name: "ProductDetail", params: { id } });

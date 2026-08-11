@@ -1,4 +1,4 @@
-import tsFront from "@/assets/images/ts-front.png";
+﻿import tsFront from "@/assets/images/ts-front.png";
 import tsBack from "@/assets/images/ts-back.png";
 import tsModel from "@/assets/images/ts-model.png";
 import cloth1 from "@/assets/images/cloth 1.png";
@@ -23,11 +23,11 @@ export default [
     category: "t-shirts",
     name: "ONE LIFE GRAPHIC T-SHIRT",
     rating: 4.5,
-    priceCurrent: 260,
-    priceOriginal: 300,
+    priceCurrent: 26000,
+    priceOriginal: 30000,
     discountPercent: 40,
     description:
-      "This graphic t‑shirt is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.",
+      "This graphic tâ€‘shirt is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.",
     colors: [
       { name: "Olive", hex: "#4F4631" },
       { name: "Forest Green", hex: "#314F4A" },
@@ -42,7 +42,7 @@ export default [
     images: [tsFront, tsBack, tsModel],
 
     faqs: [
-      { q: "What’s the fabric?", a: "100% cotton." },
+      { q: "Whatâ€™s the fabric?", a: "100% cotton." },
       { q: "Machine washable?", a: "Yes, gentle cycle." },
       { q: "How does it fit?", a: "Runs true to size." },
       { q: "Country of origin?", a: "Made in Portugal." },
@@ -54,7 +54,7 @@ export default [
         author: "Samantha D.",
         rating: 4.5,
         date: "2023-08-14",
-        text: "I absolutely love this t‑shirt! The design is unique and the fabric feels so comfortable. As a fellow designer, I appreciate the attention to detail. It's become my favorite go‑to shirt.",
+        text: "I absolutely love this tâ€‘shirt! The design is unique and the fabric feels so comfortable. As a fellow designer, I appreciate the attention to detail. It's become my favorite goâ€‘to shirt.",
         verified: true,
       },
       {
@@ -62,7 +62,7 @@ export default [
         author: "Alex M.",
         rating: 5,
         date: "2023-08-15",
-        text: "The t‑shirt exceeded my expectations! The colors are vibrant and the print quality is top‑notch. Being a UI/UX designer myself, I'm quite picky about aesthetics, and this t‑shirt definitely gets a thumbs up from me.",
+        text: "The tâ€‘shirt exceeded my expectations! The colors are vibrant and the print quality is topâ€‘notch. Being a UI/UX designer myself, I'm quite picky about aesthetics, and this tâ€‘shirt definitely gets a thumbs up from me.",
         verified: true,
       },
       {
@@ -70,7 +70,7 @@ export default [
         author: "Ethan R.",
         rating: 4.5,
         date: "2023-08-16",
-        text: "This t‑shirt is a must‑have for anyone who appreciates good design. The minimalistic yet stylish pattern caught my eye, and the fit is perfect. I can see the designer's touch in every aspect of this shirt.",
+        text: "This tâ€‘shirt is a mustâ€‘have for anyone who appreciates good design. The minimalistic yet stylish pattern caught my eye, and the fit is perfect. I can see the designer's touch in every aspect of this shirt.",
         verified: true,
       },
       {
@@ -78,7 +78,7 @@ export default [
         author: "Olivia P.",
         rating: 5,
         date: "2023-08-17",
-        text: "As a UI/UX enthusiast, I value simplicity and functionality. This t‑shirt not only represents those principles but also feels great to wear. It's evident that the designer poured their creativity into making this t‑shirt stand out.",
+        text: "As a UI/UX enthusiast, I value simplicity and functionality. This tâ€‘shirt not only represents those principles but also feels great to wear. It's evident that the designer poured their creativity into making this tâ€‘shirt stand out.",
         verified: true,
       },
       {
@@ -86,7 +86,7 @@ export default [
         author: "Liam K.",
         rating: 4,
         date: "2023-08-18",
-        text: "This t‑shirt is a fusion of comfort and creativity. The fabric is soft, and the design speaks volumes about the designer's skill. It's like wearing a piece of art that reflects my passion for both design and fashion.",
+        text: "This tâ€‘shirt is a fusion of comfort and creativity. The fabric is soft, and the design speaks volumes about the designer's skill. It's like wearing a piece of art that reflects my passion for both design and fashion.",
         verified: false,
       },
       {
@@ -94,7 +94,7 @@ export default [
         author: "Ava H.",
         rating: 4.5,
         date: "2023-08-19",
-        text: "I'm not just wearing a t‑shirt; I'm wearing a piece of design philosophy. The intricate details and thoughtful layout of the design make this shirt a conversation starter.",
+        text: "I'm not just wearing a tâ€‘shirt; I'm wearing a piece of design philosophy. The intricate details and thoughtful layout of the design make this shirt a conversation starter.",
         verified: false,
       },
     ],
@@ -104,11 +104,11 @@ export default [
     category: "casual",
     name: "T-shirt with Tape Details",
     rating: 4.5,
-    priceCurrent: 120,
-    priceOriginal: 150,
+    priceCurrent: 12000,
+    priceOriginal: 15000,
     discountPercent: 20,
     description:
-      "A lightweight casual T-shirt featuring subtle tape detailing at the seams — breathable, comfortable and easy to style. Great for layering or wearing alone.",
+      "A lightweight casual T-shirt featuring subtle tape detailing at the seams â€” breathable, comfortable and easy to style. Great for layering or wearing alone.",
     colors: [
       { name: "White", hex: "#FFFFFF" },
       { name: "Olive", hex: "#6B6B49" },
@@ -124,7 +124,7 @@ export default [
     faqs: [
       { q: "What fabric is used?", a: "100% cotton for a soft handfeel." },
       { q: "Care instructions?", a: "Machine wash cold, tumble low." },
-      { q: "Is the tape detail stitched?", a: "Yes — reinforced stitching for durability." },
+      { q: "Is the tape detail stitched?", a: "Yes â€” reinforced stitching for durability." },
     ],
     reviews: [
       {
@@ -140,7 +140,7 @@ export default [
         author: "Dan J.",
         rating: 4,
         date: "2025-06-07",
-        text: "Good value for money — fabric is soft.",
+        text: "Good value for money â€” fabric is soft.",
         verified: true,
       },
       {
@@ -160,8 +160,8 @@ export default [
     category: "casual",
     name: "Skinny Fit Jeans",
     rating: 3.5,
-    priceCurrent: 240,
-    priceOriginal: 260,
+    priceCurrent: 24000,
+    priceOriginal: 26000,
     discountPercent: 8,
     description:
       "A modern skinny fit jean cut from a stretch denim for all-day comfort. Slightly faded finish for a lived-in look.",
@@ -209,11 +209,11 @@ export default [
     category: "formal",
     name: "Checkered Shirt",
     rating: 4.5,
-    priceCurrent: 180,
-    priceOriginal: 225,
+    priceCurrent: 18000,
+    priceOriginal: 22500,
     discountPercent: 20,
     description:
-      "A sharp checkered shirt with a slim cut — designed for smart casual and office wear. Soft cotton-blend fabric for a crisp look.",
+      "A sharp checkered shirt with a slim cut â€” designed for smart casual and office wear. Soft cotton-blend fabric for a crisp look.",
     colors: [
       { name: "Blue Check", hex: "#2B5F9E" },
       { name: "Grey Check", hex: "#6E7277" },
@@ -226,7 +226,7 @@ export default [
     ],
     images: [cloth3, cloth3, cloth3],
     faqs: [
-      { q: "Is this shirt iron-friendly?", a: "Yes — low heat ironing recommended." },
+      { q: "Is this shirt iron-friendly?", a: "Yes â€” low heat ironing recommended." },
       {
         q: "Does it have a chest pocket?",
         a: "No, this style is pocketless for a cleaner silhouette.",
@@ -258,8 +258,8 @@ export default [
     category: "casual",
     name: "Sleeve Striped T-shirt",
     rating: 4.5,
-    priceCurrent: 130,
-    priceOriginal: 160,
+    priceCurrent: 13000,
+    priceOriginal: 16000,
     discountPercent: 19,
     description:
       "A casual T-shirt with bold sleeve stripes that add a sporty edge. Soft jersey knit and a relaxed fit make it an everyday favorite.",
@@ -304,8 +304,8 @@ export default [
     category: "formal",
     name: "Vertical Stripped Shirt",
     rating: 5.0,
-    priceCurrent: 212,
-    priceOriginal: 232,
+    priceCurrent: 21200,
+    priceOriginal: 23200,
     discountPercent: 9,
     description:
       "A classic vertical striped shirt for formal occasions. Slim tailored cut with breathable fabric and a crisp collar.",
@@ -321,8 +321,8 @@ export default [
     ],
     images: [cloth5, cloth5, cloth5],
     faqs: [
-      { q: "Does it come pre-shrunk?", a: "Yes — pre-shrunk to reduce post-wash changes." },
-      { q: "Is the collar stiff?", a: "Semi-stiff — holds shape but remains comfortable." },
+      { q: "Does it come pre-shrunk?", a: "Yes â€” pre-shrunk to reduce post-wash changes." },
+      { q: "Is the collar stiff?", a: "Semi-stiff â€” holds shape but remains comfortable." },
     ],
     reviews: [
       {
@@ -330,7 +330,7 @@ export default [
         author: "Emeka O.",
         rating: 5,
         date: "2025-05-16",
-        text: "Excellent quality — perfect for events.",
+        text: "Excellent quality â€” perfect for events.",
         verified: true,
       },
       {
@@ -350,8 +350,8 @@ export default [
     category: "casual",
     name: "Courage Graphic T-shirt",
     rating: 4.0,
-    priceCurrent: 145,
-    priceOriginal: 181,
+    priceCurrent: 14500,
+    priceOriginal: 18100,
     discountPercent: 20,
     description:
       "A bold graphic tee with a modern print and comfortable cotton jersey. Statement piece for casual outfits and layering.",
@@ -368,7 +368,7 @@ export default [
     ],
     images: [cloth6, cloth6, cloth6],
     faqs: [
-      { q: "Is the print durable?", a: "Yes — printed with long-lasting inks." },
+      { q: "Is the print durable?", a: "Yes â€” printed with long-lasting inks." },
       { q: "Does it shrink?", a: "Minimal shrinkage when washed according to care label." },
     ],
     reviews: [
@@ -397,8 +397,8 @@ export default [
     category: "sportswear",
     name: "Loose Fit Bermuda Shorts",
     rating: 3.0,
-    priceCurrent: 80,
-    priceOriginal: 100,
+    priceCurrent: 8000,
+    priceOriginal: 10000,
     discountPercent: 20,
     description:
       "Lightweight bermuda shorts with an elastic waistband for sport and leisure. Quick-dry fabric and side pockets.",
@@ -414,8 +414,8 @@ export default [
     ],
     images: [cloth7, cloth7, cloth7],
     faqs: [
-      { q: "Are pockets deep?", a: "Yes — deep enough for phones and keys." },
-      { q: "Suitable for running?", a: "Yes — designed for light workouts and casual wear." },
+      { q: "Are pockets deep?", a: "Yes â€” deep enough for phones and keys." },
+      { q: "Suitable for running?", a: "Yes â€” designed for light workouts and casual wear." },
     ],
     reviews: [
       {
@@ -443,8 +443,8 @@ export default [
     category: "casual",
     name: "Faded Skinny Jeans",
     rating: 4.5,
-    priceCurrent: 210,
-    priceOriginal: 263,
+    priceCurrent: 21000,
+    priceOriginal: 26300,
     discountPercent: 20,
     description:
       "A trendy pair of skinny jeans with controlled fading and a stretch blend for comfort. Slim silhouette and modern fit.",
@@ -492,8 +492,8 @@ export default [
     category: "casual",
     name: "Polo with Contrast Trims",
     rating: 4.0,
-    priceCurrent: 212,
-    priceOriginal: 242,
+    priceCurrent: 21200,
+    priceOriginal: 24200,
     discountPercent: 12,
     description:
       "Smart-casual polo featuring contrast tipping on the collar and sleeves. Soft pique knit with a neat finish.",
@@ -509,7 +509,7 @@ export default [
     ],
     images: [poloWthContrastTrims, poloWthContrastTrims],
     faqs: [
-      { q: "Material?", a: "Cotton pique — breathable and durable." },
+      { q: "Material?", a: "Cotton pique â€” breathable and durable." },
       { q: "Can it be ironed?", a: "Yes, at low to medium heat." },
     ],
     reviews: [
@@ -538,8 +538,8 @@ export default [
     category: "casual",
     name: "Gradient Graphic T-shirt",
     rating: 3.5,
-    priceCurrent: 145,
-    priceOriginal: 181,
+    priceCurrent: 14500,
+    priceOriginal: 18100,
     discountPercent: 20,
     description:
       "A lightweight tee with a gradient graphic print for a contemporary look. Comfortable fit, great for everyday wear.",
@@ -555,7 +555,7 @@ export default [
     ],
     images: [gradientGraphicTshirt, gradientGraphicTshirt],
     faqs: [
-      { q: "Is the print soft?", a: "Yes — printed with soft-hand inks." },
+      { q: "Is the print soft?", a: "Yes â€” printed with soft-hand inks." },
       { q: "Does it fade quickly?", a: "Follow care instructions; colours are stable." },
     ],
     reviews: [
@@ -584,8 +584,8 @@ export default [
     category: "formal",
     name: "Polo with Tipping Details",
     rating: 4.5,
-    priceCurrent: 180,
-    priceOriginal: 225,
+    priceCurrent: 18000,
+    priceOriginal: 22500,
     discountPercent: 20,
     description:
       "Classic polo with refined tipping on collar edges. Designed for office-friendly smart casual looks.",
@@ -601,7 +601,7 @@ export default [
     ],
     images: [poloWithTipping, poloWithTipping],
     faqs: [
-      { q: "Is the fabric breathable?", a: "Yes — classic cotton pique." },
+      { q: "Is the fabric breathable?", a: "Yes â€” classic cotton pique." },
       {
         q: "Does the tipping come in different colours?",
         a: "This style ships with the shown contrasting tipping.",
@@ -633,8 +633,8 @@ export default [
     category: "casual",
     name: "Black Striped T-shirt",
     rating: 5,
-    priceCurrent: 120,
-    priceOriginal: 150,
+    priceCurrent: 12000,
+    priceOriginal: 15000,
     discountPercent: 20,
     description:
       "Timeless black tee with subtle stripe accents. Soft, durable and perfect for everyday wear.",
@@ -678,8 +678,8 @@ export default [
     category: "casual",
     name: "Relaxed Oversized Tee",
     rating: 4.2,
-    priceCurrent: 140,
-    priceOriginal: 180,
+    priceCurrent: 14000,
+    priceOriginal: 18000,
     discountPercent: 22,
     description:
       "A soft, relaxed-fit oversized tee cut for effortless styling. Breathable cotton blend, dropped shoulders and a slightly longer hem for modern layering. Perfect for casual days and streetwear looks.",
@@ -696,11 +696,11 @@ export default [
     ],
     images: [relaxedOversizedTee],
     faqs: [
-      { q: "What’s the fabric?", a: "60% cotton, 40% modal for extra softness." },
-      { q: "Is it pre-shrunk?", a: "Yes — minimal shrinkage when washed per care instructions." },
+      { q: "Whatâ€™s the fabric?", a: "60% cotton, 40% modal for extra softness." },
+      { q: "Is it pre-shrunk?", a: "Yes â€” minimal shrinkage when washed per care instructions." },
       {
         q: "How does it fit?",
-        a: "Designed oversized — if you prefer a regular fit, size down one.",
+        a: "Designed oversized â€” if you prefer a regular fit, size down one.",
       },
     ],
     reviews: [
@@ -709,7 +709,7 @@ export default [
         author: "Nora A.",
         rating: 5,
         date: "2025-07-12",
-        text: "Lovely fabric and great cut. Oversized but still looks tidy — great for layering.",
+        text: "Lovely fabric and great cut. Oversized but still looks tidy â€” great for layering.",
         verified: true,
       },
       {
@@ -737,11 +737,11 @@ export default [
     category: "casual",
     name: "Striped Summer Polo",
     rating: 4.6,
-    priceCurrent: 195,
-    priceOriginal: 245,
+    priceCurrent: 19500,
+    priceOriginal: 24500,
     discountPercent: 20,
     description:
-      "A lightweight polo built for warm days — breathable piqué knit with tonal stripes and a soft ribbed collar. Smart-casual by design, it pairs well with chinos or denim.",
+      "A lightweight polo built for warm days â€” breathable piquÃ© knit with tonal stripes and a soft ribbed collar. Smart-casual by design, it pairs well with chinos or denim.",
     colors: [
       { name: "Navy / Cream", hex: "#0F2B4C" },
       { name: "Stone / White", hex: "#E6E1D6" },
@@ -755,8 +755,8 @@ export default [
     ],
     images: [stripedSummerPolo],
     faqs: [
-      { q: "What fabric is used?", a: "100% premium cotton piqué." },
-      { q: "Are buttons reinforced?", a: "Yes — corozo-style buttons with reinforced stitching." },
+      { q: "What fabric is used?", a: "100% premium cotton piquÃ©." },
+      { q: "Are buttons reinforced?", a: "Yes â€” corozo-style buttons with reinforced stitching." },
       { q: "Can I iron it?", a: "Yes, iron on low-medium heat; avoid high heat on ribbing." },
     ],
     reviews: [
@@ -765,7 +765,7 @@ export default [
         author: "Kemi O.",
         rating: 5,
         date: "2025-07-09",
-        text: "Smart look and breathable — wore it for a weekend outing and got lots of compliments.",
+        text: "Smart look and breathable â€” wore it for a weekend outing and got lots of compliments.",
         verified: true,
       },
       {
@@ -773,7 +773,7 @@ export default [
         author: "Daniel R.",
         rating: 4.5,
         date: "2025-07-10",
-        text: "Great quality. Slightly slimmer than expected — I recommend checking the size guide.",
+        text: "Great quality. Slightly slimmer than expected â€” I recommend checking the size guide.",
         verified: true,
       },
       {
@@ -793,8 +793,8 @@ export default [
     category: "formal",
     name: "Denim Overshirt",
     rating: 4.8,
-    priceCurrent: 320,
-    priceOriginal: 400,
+    priceCurrent: 32000,
+    priceOriginal: 40000,
     discountPercent: 20,
     description:
       "A tailored denim overshirt crafted from rigid-wash denim with refined stitching and classic chest pockets. Wear it as a lightweight jacket or layered over shirts for a clean, elevated look.",
@@ -821,7 +821,7 @@ export default [
       },
       {
         q: "Does it run true to size?",
-        a: "Yes — fits true to size; choose outerwear size if layering thicker knits.",
+        a: "Yes â€” fits true to size; choose outerwear size if layering thicker knits.",
       },
     ],
     reviews: [

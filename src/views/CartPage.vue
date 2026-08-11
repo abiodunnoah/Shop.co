@@ -1,7 +1,9 @@
-<script setup>
+﻿<script setup>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "@/stores/cartStore";
+import { DELIVERY_FEE } from "@/data/shipping";
+import { fmtNaira } from "@/utils/currency";
 import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
 
@@ -15,25 +17,16 @@ const cart = useCartStore();
 
 // Promo state
 const promoCode = ref("");
-const appliedPromo = ref(null);
-const deliveryFee = 15;
 
 const subtotal = computed(() =>
   cart.items.reduce((sum, i) => sum + (Number(i.price) || 0) * (i.quantity || 0), 0)
 );
 
-const discountAmount = computed(() => {
-  if (!appliedPromo.value) return 0;
-  return Math.round(subtotal.value * (appliedPromo.value.percent || 0));
-});
+const discountAmount = computed(() => cart.discountAmount);
 
 const total = computed(() => {
-  return Math.max(0, subtotal.value - discountAmount.value + deliveryFee);
+  return Math.max(0, subtotal.value - discountAmount.value + DELIVERY_FEE);
 });
-
-function fmtCurrency(v) {
-  return `₦${Number(v).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
-}
 
 function increaseQty(item) {
   if (typeof cart.updateQuantity === "function") {
@@ -45,9 +38,6 @@ function increaseQty(item) {
 
 function decreaseQty(item) {
   const newQty = (item.quantity || 0) - 1;
-  if (newQty === 1) {
-    item.quantity;
-  }
 
   if (typeof cart.updateQuantity === "function") {
     cart.updateQuantity(item.key ?? item.id, newQty);
@@ -68,20 +58,12 @@ function applyPromo() {
   const code = (promoCode.value || "").trim().toUpperCase();
   if (!code) return alert("Enter a promo code.");
 
-  if (code === "SAVE20") {
-    appliedPromo.value = { code: "SAVE20", percent: 0.2 };
-    return;
-  }
-  if (code === "TAKE10") {
-    appliedPromo.value = { code: "TAKE10", percent: 0.1 };
-    return;
-  } else {
-    alert("Promo code not valid.");
-  }
+  const ok = cart.applyPromo(code);
+  if (!ok) alert("Promo code not valid.");
 }
 
 function clearPromo() {
-  appliedPromo.value = null;
+  cart.clearPromo();
   promoCode.value = "";
 }
 
@@ -100,19 +82,19 @@ function seedDemoCart() {
     {
       id: "p-101",
       name: "Gradient Graphic T-shirt",
-      price: 145,
+      price: 14500,
       image: img1,
     },
     {
       id: "p-102",
       name: "Checkered Shirt",
-      price: 180,
+      price: 18000,
       image: img2,
     },
     {
       id: "p-103",
       name: "Skinny Fit Jeans",
-      price: 240,
+      price: 24000,
       image: img3,
     },
   ];
@@ -131,7 +113,7 @@ function seedDemoCart() {
       key: "p-101::Large::White",
       id: "p-101",
       name: demoProducts[0].name,
-      price: 145,
+      price: 14500,
       image: img1,
       size: "Large",
       color: "White",
@@ -141,7 +123,7 @@ function seedDemoCart() {
       key: "p-102::Medium::Red",
       id: "p-102",
       name: demoProducts[1].name,
-      price: 180,
+      price: 18000,
       image: img2,
       size: "Medium",
       color: "Red",
@@ -151,7 +133,7 @@ function seedDemoCart() {
       key: "p-103::Large::Blue",
       id: "p-103",
       name: demoProducts[2].name,
-      price: 240,
+      price: 24000,
       image: img3,
       size: "Large",
       color: "Blue",
@@ -173,7 +155,7 @@ function seedDemoCart() {
   <main class="cart-page">
     <nav class="crumbs">
       <router-link to="/">Home</router-link>
-      <span class="sep">›</span>
+      <span class="sep">â€º</span>
       <router-link to="/cart">Cart</router-link>
     </nav>
 
@@ -200,7 +182,7 @@ function seedDemoCart() {
             <div class="title-row">
               <h3 class="item-name">{{ item.name }}</h3>
               <button class="remove-btn" @click="removeItem(item)" aria-label="Remove item">
-                🗑
+                ðŸ—‘
               </button>
             </div>
 
@@ -214,10 +196,10 @@ function seedDemoCart() {
             </div>
 
             <div class="price-qty">
-              <div class="price">{{ fmtCurrency(item.price) }}</div>
+              <div class="price">{{ fmtNaira(item.price) }}</div>
 
               <div class="qty-controls" role="group" aria-label="Quantity">
-                <button class="qty-btn" @click="decreaseQty(item)">−</button>
+                <button class="qty-btn" @click="decreaseQty(item)">âˆ’</button>
                 <div class="qty">{{ item.quantity }}</div>
                 <button class="qty-btn" @click="increaseQty(item)">+</button>
               </div>
@@ -234,25 +216,25 @@ function seedDemoCart() {
           <dl class="summary-list">
             <div class="row">
               <dt>Subtotal</dt>
-              <dd>{{ fmtCurrency(subtotal) }}</dd>
+              <dd>{{ fmtNaira(subtotal) }}</dd>
             </div>
 
             <div class="row">
               <dt>Discount</dt>
               <dd :class="{ negative: discountAmount > 0 }">
-                <span v-if="discountAmount > 0">- {{ fmtCurrency(discountAmount) }}</span>
+                <span v-if="discountAmount > 0">- {{ fmtNaira(discountAmount) }}</span>
                 <span v-else>-</span>
               </dd>
             </div>
 
             <div class="row">
               <dt>Delivery Fee</dt>
-              <dd>{{ fmtCurrency(deliveryFee) }}</dd>
+              <dd>{{ fmtNaira(DELIVERY_FEE) }}</dd>
             </div>
 
             <div class="row total">
               <dt>Total</dt>
-              <dd>{{ fmtCurrency(total) }}</dd>
+              <dd>{{ fmtNaira(total) }}</dd>
             </div>
           </dl>
 
@@ -265,12 +247,14 @@ function seedDemoCart() {
             />
             <div class="promo-actions">
               <button class="btn-apply" @click="applyPromo">Apply</button>
-              <button v-if="appliedPromo" class="btn-clear" @click="clearPromo">Clear</button>
+              <button v-if="cart.appliedPromo" class="btn-clear" @click="clearPromo">Clear</button>
             </div>
-            <small v-if="appliedPromo" class="applied-note">Applied: {{ appliedPromo.code }}</small>
+            <small v-if="cart.appliedPromo" class="applied-note"
+              >Applied: {{ cart.appliedPromo.code }}</small
+            >
           </div>
 
-          <button class="btn-checkout" @click="goToCheckout">Go to Checkout →</button>
+          <button class="btn-checkout" @click="goToCheckout">Go to Checkout â†’</button>
         </div>
       </aside>
     </div>

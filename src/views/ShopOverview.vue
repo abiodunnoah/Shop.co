@@ -6,6 +6,7 @@ import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
 import Footer from "@/components/FooterView.vue";
 import products from "@/data/products.js";
+import { fmtNaira } from "@/utils/currency";
 
 const route = useRoute();
 const router = useRouter();
@@ -27,16 +28,17 @@ const indexed = (Array.isArray(products) ? products : []).map((p) => ({
 const results = computed(() => {
   const term = (searchQuery.value || "").toLowerCase().trim();
   if (!term) return indexed;
+  // eslint-disable-next-line no-unused-vars
   return indexed.filter((p) => p._text.includes(term)).map(({ _text, ...rest }) => rest);
 });
 
 function goWithQuery(q) {
   const trimmed = (q || "").trim();
   if (!trimmed) {
-    router.push({ name: "ShopOverview", query: {} }).catch(() => {});
+    router.push({ name: "Products", query: {} }).catch(() => {});
     return;
   }
-  router.push({ name: "ShopOverview", query: { q: trimmed } }).catch(() => {});
+  router.push({ name: "Products", query: { q: trimmed } }).catch(() => {});
 }
 </script>
 
@@ -115,7 +117,7 @@ function goWithQuery(q) {
             <h3 class="text-base font-semibold leading-tight mb-2 min-h-[2.4em]">{{ p.name }}</h3>
 
             <div class="flex items-center justify-between">
-              <div class="font-extrabold">₦{{ p.priceCurrent }}</div>
+              <div class="font-extrabold">{{ fmtNaira(p.priceCurrent) }}</div>
               <div class="text-sm text-gray-500">{{ p.rating }} / 5</div>
             </div>
           </div>

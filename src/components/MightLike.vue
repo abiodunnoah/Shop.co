@@ -1,9 +1,25 @@
 <script setup>
 import products from "@/data/products.js";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
+import StarRating from "@/components/StarRating.vue";
+import PriceTag from "@/components/PriceTag.vue";
+
+const props = defineProps({
+  currentId: { type: [String, Number], default: null },
+});
 
 const router = useRouter();
-const mightLike = products.slice(8, 12);
+
+const mightLike = computed(() => {
+  const current = products.find((p) => String(p.id) === String(props.currentId));
+  const sameCategory = products.filter(
+    (p) => current && p.category === current.category && String(p.id) !== String(props.currentId)
+  );
+  const others = products.filter((p) => !current || p.category !== current.category);
+  const recs = [...sameCategory, ...others].slice(0, 4);
+  return recs.length ? recs : products.slice(0, 4);
+});
 
 function goToDetail(id) {
   router.push({ name: "ProductDetail", params: { id } }).catch((err) => {
@@ -28,33 +44,12 @@ function goToDetail(id) {
         class="card__item cursor-pointer"
         @click="goToDetail(prod.id)"
       >
-        <img :src="prod.image" :alt="prod.name" class="card__image" />
+        <img :src="prod.image" :alt="prod.name" class="card__image" loading="lazy" decoding="async" />
         <h3 class="card__name">{{ prod.name }}</h3>
 
-        <div class="card__rating">
-          <span
-            v-for="n in 5"
-            :key="n"
-            class="star"
-            :class="{
-              star: true,
-              half: n === Math.ceil(prod.rating) && prod.rating % 1 !== 0,
-              empty: n > prod.rating,
-            }"
-            >★</span
-          >
-          <span class="rating-text">
-            {{ prod.rating }}/<span class="total-rating-text">5</span>
-          </span>
-        </div>
+        <StarRating :value="prod.rating" />
 
-        <div class="card__price">
-          <span class="price-current">₦{{ prod.priceCurrent }}</span>
-          <span v-if="prod.priceOriginal" class="price-original"> ₦{{ prod.priceOriginal }} </span>
-          <span v-if="prod.priceOriginal" class="badge">
-            -{{ Math.round((1 - prod.priceCurrent / prod.priceOriginal) * 100) }}%
-          </span>
-        </div>
+        <PriceTag :price="prod.priceCurrent" :original="prod.priceOriginal" />
       </div>
     </div>
   </section>
@@ -104,66 +99,6 @@ function goToDetail(id) {
   margin: 0.25rem 0;
 }
 
-.card__rating {
-  display: flex;
-  align-items: center;
-  /* justify-content: center; */
-  gap: 0.25rem;
-  margin-bottom: 0.25rem;
-}
-
-.star {
-  color: #f5a623;
-  font-size: 1.25rem;
-  line-height: 1;
-}
-.star.empty {
-  color: #ddd;
-}
-.star.half {
-  background: linear-gradient(90deg, #f5a623 50%, #ddd 50%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.rating-text {
-  font-size: 14px;
-  margin-left: 0.25rem;
-}
-
-.total-rating-text {
-  color: #555;
-  font-size: 14px;
-}
-
-.card__price {
-  display: flex;
-  align-items: center;
-  /* justify-content: center; */
-  gap: 0.5rem;
-}
-
-.price-current {
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.price-original {
-  font-size: 20px;
-  color: #999;
-  text-decoration: line-through;
-}
-
-.badge {
-  background: #ff33331a;
-  color: #fc2b2b;
-  font-size: 0.75rem;
-  padding: 0.125rem 0.5rem;
-  border-radius: 0.75rem;
-  font-weight: 500;
-}
-
 .view-all-wrapper {
   text-align: center;
   margin-top: 2rem;
@@ -209,15 +144,6 @@ function goToDetail(id) {
 
   .card__name {
     font-size: 0.9rem;
-  }
-
-  .price-current {
-    font-size: 18px;
-    font-weight: 800;
-  }
-
-  .price-original {
-    font-size: 18px;
   }
 }
 </style>

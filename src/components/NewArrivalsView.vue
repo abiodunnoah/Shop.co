@@ -1,5 +1,7 @@
 <script setup>
 import products from "@/data/products.js";
+import StarRating from "@/components/StarRating.vue";
+import PriceTag from "@/components/PriceTag.vue";
 
 function pickTopN(flag, sorter, n = 4) {
   const matched = products.filter((p) => !!p[flag]).slice();
@@ -39,29 +41,12 @@ const topSelling = pickTopN(
         :to="{ name: 'ProductDetail', params: { id: prod.id } }"
         class="card__item cursor-pointer"
       >
-        <img :src="prod.image" :alt="prod.name" class="card__image" />
+        <img :src="prod.image" :alt="prod.name" class="card__image" loading="lazy" decoding="async" />
         <h3 class="card__name">{{ prod.name }}</h3>
 
-        <div class="card__rating">
-          <span
-            v-for="n in 5"
-            :key="n"
-            class="star"
-            :class="{ 'text-gray-300': n > Math.floor(prod.rating) }"
-            >★</span
-          >
-          <span class="rating-text"
-            >{{ prod.rating }}/<span class="total-rating-text">5</span></span
-          >
-        </div>
+        <StarRating :value="prod.rating" />
 
-        <div class="card__price">
-          <span class="price-current">₦{{ prod.priceCurrent }}</span>
-          <span v-if="prod.priceOriginal" class="price-original"> ₦{{ prod.priceOriginal }} </span>
-          <span v-if="prod.priceOriginal" class="badge">
-            -{{ Math.round((1 - prod.priceCurrent / prod.priceOriginal) * 100) }}%
-          </span>
-        </div>
+        <PriceTag :price="prod.priceCurrent" :original="prod.priceOriginal" />
       </router-link>
     </div>
     <div class="view-all-wrapper">
@@ -79,32 +64,12 @@ const topSelling = pickTopN(
         :to="{ name: 'ProductDetail', params: { id: prod.id } }"
         class="card__item cursor-pointer"
       >
-        <img :src="prod.image" :alt="prod.name" class="card__image" />
+        <img :src="prod.image" :alt="prod.name" class="card__image" loading="lazy" decoding="async" />
         <h3 class="card__name">{{ prod.name }}</h3>
 
-        <div class="card__rating">
-          <span
-            v-for="n in 5"
-            :key="n"
-            class="star"
-            :class="{
-              'text-gray-300': n > Math.floor(prod.rating),
-              half: n === Math.ceil(prod.rating) && prod.rating % 1 !== 0,
-            }"
-            >★</span
-          >
-          <span class="rating-text">
-            {{ prod.rating }}/<span class="total-rating-text">5</span>
-          </span>
-        </div>
+        <StarRating :value="prod.rating" />
 
-        <div class="card__price">
-          <span class="price-current">₦{{ prod.priceCurrent }}</span>
-          <span v-if="prod.priceOriginal" class="price-original"> ₦{{ prod.priceOriginal }} </span>
-          <span v-if="prod.priceOriginal" class="badge">
-            -{{ Math.round((1 - prod.priceCurrent / prod.priceOriginal) * 100) }}%
-          </span>
-        </div>
+        <PriceTag :price="prod.priceCurrent" :original="prod.priceOriginal" />
       </router-link>
     </div>
     <div class="view-all-wrapper">
@@ -158,69 +123,6 @@ const topSelling = pickTopN(
   font-size: 1rem;
   font-weight: 600;
   margin: 0.25rem 0;
-}
-
-.card__rating {
-  display: flex;
-  align-items: center;
-  /* justify-content: center; */
-  gap: 0.25rem;
-  margin-bottom: 0.25rem;
-}
-
-.star {
-  color: #f5a623;
-  font-size: 1.25rem;
-  line-height: 1;
-}
-
-.star.empty {
-  color: #ddd;
-}
-
-.star.half {
-  /* simple half-star mask */
-  background: linear-gradient(90deg, #f5a623 50%, #ddd 50%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.rating-text {
-  font-size: 14px;
-  margin-left: 0.25rem;
-}
-
-.total-rating-text {
-  color: #555;
-  font-size: 14px;
-}
-
-.card__price {
-  display: flex;
-  align-items: center;
-  /* justify-content: center; */
-  gap: 0.5rem;
-}
-
-.price-current {
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.price-original {
-  font-size: 20px;
-  color: #999;
-  text-decoration: line-through;
-}
-
-.badge {
-  background: #ff33331a;
-  color: #fc2b2b;
-  font-size: 0.75rem;
-  padding: 0.125rem 0.5rem;
-  border-radius: 0.75rem;
-  font-weight: 500;
 }
 
 .view-all-wrapper {
@@ -278,15 +180,6 @@ const topSelling = pickTopN(
 
   .card__name {
     font-size: 0.9rem;
-  }
-
-  .price-current {
-    font-size: 18px;
-    font-weight: 800;
-  }
-
-  .price-original {
-    font-size: 18px;
   }
 }
 </style>

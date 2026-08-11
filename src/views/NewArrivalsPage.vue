@@ -2,6 +2,8 @@
 import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
 import Footer from "@/components/FooterView.vue";
+import StarRating from "@/components/StarRating.vue";
+import PriceTag from "@/components/PriceTag.vue";
 import products from "@/data/products";
 
 const newArrivals = products
@@ -53,23 +55,14 @@ const newArrivals = products
             <h3 class="card-title">{{ product.name }}</h3>
 
             <div class="meta-row">
-              <div class="rating" :aria-label="`${product.rating} out of 5`">
-                <span
-                  v-for="n in 5"
-                  :key="n"
-                  class="star"
-                  :class="{ muted: n > Math.floor(product.rating) }"
-                  >★</span
-                >
-                <span class="rating-text">{{ product.rating }}/5</span>
-              </div>
+              <StarRating :value="product.rating" size="sm" />
 
-              <div class="price">
-                <span class="price-current">₦{{ product.priceCurrent }}</span>
-                <span v-if="product.priceOriginal" class="price-original"
-                  >₦{{ product.priceOriginal }}</span
-                >
-              </div>
+              <PriceTag
+                :price="product.priceCurrent"
+                :original="product.priceOriginal"
+                size="sm"
+                :show-badge="false"
+              />
             </div>
           </div>
         </router-link>
@@ -173,39 +166,6 @@ const newArrivals = products
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-}
-
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.95rem;
-  color: #333;
-}
-.star {
-  color: #f5a623;
-  font-size: 1rem;
-  line-height: 1;
-}
-.star.muted {
-  color: #ddd;
-}
-.rating-text {
-  color: #666;
-  font-size: 0.85rem;
-  margin-left: 0.25rem;
-}
-
-.price-current {
-  font-size: 16px;
-  font-weight: 800;
-  color: #111;
-}
-.price-original {
-  font-size: 14px;
-  color: #999;
-  text-decoration: line-through;
-  margin-left: 0.5rem;
 }
 
 /* empty state */

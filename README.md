@@ -9,7 +9,7 @@ A modern e-commerce application built with Vue 3 and Vite, featuring a responsiv
 ## ✨ Features
 
 - **User Authentication**: Secure sign-up and sign-in functionality powered by Firebase Auth.
-- **Product Browsing**: Browse products by category (Casual, Formal, Gym, Party) and view detailed product information.
+- **Product Browsing**: Browse products by category (Casual, Formal, T-shirts, Sportswear) and view detailed product information.
 - **Shopping Cart**: Add items to cart, adjust quantities, and view real-time price updates.
 - **Checkout Process**: Integrated checkout with form validation and shipping calculation.
 - **Payment Integration**: Secure payment processing utilizing the Paystack payment gateway.

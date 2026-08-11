@@ -1,14 +1,31 @@
 <script setup>
+import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
 import CancelButton from "@/assets/icons/cancelButton.png";
+
+const route = useRoute();
+const hidden = ref(localStorage.getItem("signup-banner-dismissed") === "1");
+
+const showBanner = computed(
+  () => !hidden.value && route.name !== "Login" && route.name !== "Register"
+);
+
+function dismiss() {
+  hidden.value = true;
+  localStorage.setItem("signup-banner-dismissed", "1");
+}
 </script>
 
 <template>
-  <div class="container">
+  <div v-if="showBanner" class="container">
     <div class="container-wrapper">
-      <p class="signup-text">Sign up and get 20% off your first order. <span>Sign Up Now</span></p>
-      <div class="cancel-button-wrapper">
-        <img :src="CancelButton" alt="cancel button" class="cancel-button" />
-      </div>
+      <p class="signup-text">
+        Sign up and get 20% off your first order.
+        <router-link to="/register" class="signup-link"><span>Sign Up Now</span></router-link>
+      </p>
+      <button type="button" class="cancel-button" @click="dismiss" aria-label="Dismiss announcement">
+        <img :src="CancelButton" alt="Dismiss" />
+      </button>
     </div>
   </div>
 </template>
@@ -39,7 +56,12 @@ import CancelButton from "@/assets/icons/cancelButton.png";
   margin-top: -5px;
 }
 
-span {
+.signup-link {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.signup-link span {
   cursor: pointer;
   text-decoration: underline;
   font-weight: 500;
@@ -47,7 +69,6 @@ span {
 }
 
 .cancel-button {
-  width: 13px;
   position: absolute;
   right: 3rem;
   top: 40%;
@@ -55,8 +76,13 @@ span {
   background: transparent;
   border: none;
   color: #fff;
-  font-size: 1.25rem;
   cursor: pointer;
+  padding: 0;
+}
+
+.cancel-button img {
+  width: 13px;
+  display: block;
 }
 
 @media (max-width: 768px) {

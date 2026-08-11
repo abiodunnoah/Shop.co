@@ -12,26 +12,38 @@ import gym from "@/assets/images/gym.png";
 
       <!-- Row 1 -->
       <div class="row">
-        <div class="card card--casual">
+        <router-link
+          :to="{ name: 'CategoryPage', params: { category: 'casual' } }"
+          class="card card--casual"
+        >
           <span class="label">Casual</span>
           <img :src="casual" alt="Casual" />
-        </div>
-        <div class="card card--formal">
+        </router-link>
+        <router-link
+          :to="{ name: 'CategoryPage', params: { category: 'formal' } }"
+          class="card card--formal"
+        >
           <span class="label">Formal</span>
           <img :src="formal" alt="Formal" />
-        </div>
+        </router-link>
       </div>
 
       <!-- Row 2 -->
       <div class="row">
-        <div class="card card--party">
+        <router-link
+          :to="{ name: 'CategoryPage', params: { category: 't-shirts' } }"
+          class="card card--party"
+        >
           <span class="label">Party</span>
           <img :src="party" alt="Party" />
-        </div>
-        <div class="card card--gym">
+        </router-link>
+        <router-link
+          :to="{ name: 'CategoryPage', params: { category: 'sportswear' } }"
+          class="card card--gym"
+        >
           <span class="label">Gym</span>
           <img :src="gym" alt="Gym" />
-        </div>
+        </router-link>
       </div>
     </div>
   </section>
@@ -73,6 +85,8 @@ import gym from "@/assets/images/gym.png";
   height: 280px;
   display: flex;
   align-items: flex-end;
+  text-decoration: none;
+  color: inherit;
 }
 
 .card--casual {

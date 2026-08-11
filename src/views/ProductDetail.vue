@@ -70,7 +70,7 @@ function onLoadMoreReviews() {
     <template v-else>
       <p>Product not found.</p>
     </template>
-    <MightLike />
+    <MightLike :current-id="pd.id" />
   </main>
   <FooterView />
 </template>

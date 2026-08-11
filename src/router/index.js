@@ -9,6 +9,7 @@ const router = createRouter({
       path: "/",
       name: "Home",
       component: HomePage,
+      meta: { title: "Home" },
     },
     {
       path: "/product/:id",
@@ -18,6 +19,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import("../views/ProductDetail.vue"),
       props: true,
+      meta: { title: "Product Details" },
     },
     {
       path: "/shop",
@@ -29,50 +31,56 @@ const router = createRouter({
       name: "CategoryPage",
       component: () => import("../views/CategoryPage.vue"),
       props: true,
+      meta: { title: "Shop" },
     },
     {
       path: "/cart",
       name: "CartPage",
       component: () => import("../views/CartPage.vue"),
       props: true,
+      meta: { title: "Your Cart" },
     },
     {
       path: "/checkout",
       name: "CheckoutPage",
       component: () => import("../views/CheckoutPage.vue"),
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: true, title: "Checkout" },
     },
     {
       path: "/login",
       name: "Login",
       component: () => import("@/views/SignIn.vue"),
-      meta: { requiresGuest: true },
+      meta: { requiresGuest: true, title: "Sign In" },
     },
     {
       path: "/register",
       name: "Register",
       component: () => import("@/views/SignUp.vue"),
-      meta: { requiresGuest: true },
+      meta: { requiresGuest: true, title: "Sign Up" },
     },
     {
       path: "/products/new-arrivals",
       name: "NewArrivals",
       component: () => import("@/views/NewArrivalsPage.vue"),
+      meta: { title: "New Arrivals" },
     },
     {
       path: "/products/top-selling",
       name: "TopSelling",
       component: () => import("@/views/TopSellingPage.vue"),
+      meta: { title: "Top Selling" },
     },
     {
       path: "/products",
-      name: "ShopOverview",
+      name: "Products",
       component: () => import("../views/ShopOverview.vue"),
+      meta: { title: "Products" },
     },
     {
       path: "/payment-success",
       name: "PaymentSuccess",
       component: () => import("@/views/PaymentSuccess.vue"),
+      meta: { title: "Order Confirmed" },
     },
 
     { path: "/:pathMatch(.*)*", redirect: "/" },
@@ -113,6 +121,10 @@ router.beforeEach(async (to) => {
   }
 
   return true;
+});
+
+router.afterEach((to) => {
+  document.title = to.meta?.title ? `${to.meta.title} | SHOP.CO` : "SHOP.CO";
 });
 
 export default router;

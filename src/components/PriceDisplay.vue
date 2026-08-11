@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({
+defineProps({
   price: { type: Number, required: true },
   original: { type: Number, default: null },
   discountPercent: { type: Number, default: 0 },

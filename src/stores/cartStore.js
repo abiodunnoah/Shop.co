@@ -56,10 +56,35 @@ export const useCartStore = defineStore("cart", () => {
 
   function clearCart() {
     items.value = [];
+    appliedPromo.value = null;
   }
 
   const totalItems = computed(() => items.value.reduce((sum, i) => sum + i.quantity, 0));
   const totalPrice = computed(() => items.value.reduce((sum, i) => sum + i.price * i.quantity, 0));
+
+  const appliedPromo = ref(null);
+
+  const discountAmount = computed(() => {
+    if (!appliedPromo.value) return 0;
+    return Math.round(totalPrice.value * (appliedPromo.value.percent || 0));
+  });
+
+  function applyPromo(code) {
+    const normalized = (code || "").trim().toUpperCase();
+    if (normalized === "SAVE20") {
+      appliedPromo.value = { code: "SAVE20", percent: 0.2 };
+      return true;
+    }
+    if (normalized === "TAKE10") {
+      appliedPromo.value = { code: "TAKE10", percent: 0.1 };
+      return true;
+    }
+    return false;
+  }
+
+  function clearPromo() {
+    appliedPromo.value = null;
+  }
 
   watch(
     items,
@@ -70,6 +95,7 @@ export const useCartStore = defineStore("cart", () => {
   );
 
   let autoSaveTimer = null;
+  let autoSaveWatcher = null;
   let currentUid = null;
 
   async function saveToServer(uid) {
@@ -132,7 +158,7 @@ export const useCartStore = defineStore("cart", () => {
     stopAutoSave();
     currentUid = uid;
 
-    watch(
+    autoSaveWatcher = watch(
       items,
       () => {
         if (autoSaveTimer) clearTimeout(autoSaveTimer);
@@ -150,6 +176,10 @@ export const useCartStore = defineStore("cart", () => {
       clearTimeout(autoSaveTimer);
       autoSaveTimer = null;
     }
+    if (autoSaveWatcher) {
+      autoSaveWatcher();
+      autoSaveWatcher = null;
+    }
     currentUid = null;
   }
 
@@ -161,6 +191,10 @@ export const useCartStore = defineStore("cart", () => {
     updateQuantity,
     totalItems,
     totalPrice,
+    appliedPromo,
+    discountAmount,
+    applyPromo,
+    clearPromo,
     saveToServer,
     loadFromServer,
     startAutoSave,

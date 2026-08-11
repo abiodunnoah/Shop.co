@@ -17,8 +17,8 @@ const props = defineProps({
 const emit = defineEmits(["add-to-cart", "write-review", "load-more-reviews"]);
 
 const currentImage = ref(0);
-const selectedColor = ref(props.product.colors[0].name);
-const selectedSize = ref(props.product.sizes[0].label);
+const selectedColor = ref("");
+const selectedSize = ref("");
 const quantity = ref(1);
 const activeTab = ref(0);
 const sortOrder = ref("latest");

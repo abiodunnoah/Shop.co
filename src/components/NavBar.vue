@@ -26,10 +26,8 @@ const categories = [
   { label: "Shop", slug: "shop" },
   { label: "Casual", slug: "casual" },
   { label: "Formal", slug: "formal" },
-  { label: "T‑shirts", slug: "t-shirts" },
-  { label: "Jean", slug: "jean" },
+  { label: "T-shirts", slug: "t-shirts" },
   { label: "Sportswear", slug: "sportswear" },
-  { label: "Accessories", slug: "accessories" },
 ];
 
 const selectedCategory = ref("shop");
@@ -38,11 +36,11 @@ function toggleMenu() {
   menuOpen.value = !menuOpen.value;
 }
 
-function toggleSearch() {
-  searchOpen.value = !searchOpen.value;
-}
-
 function goToCategory() {
+  if (selectedCategory.value === "shop") {
+    router.push({ name: "Products" });
+    return;
+  }
   router.push({ name: "CategoryPage", params: { category: selectedCategory.value } });
 }
 
@@ -70,9 +68,6 @@ async function logoutUser() {
   isLoggingOut.value = true;
 
   try {
-    if (typeof cart.clearCart === "function") {
-      cart.clearCart();
-    }
     await auth.logout();
     router.push("/");
   } catch (err) {
@@ -89,7 +84,7 @@ function navigateToShop(q) {
     return;
   }
 
-  const target = { name: "ShopOverview", query: { q: trimmed } };
+  const target = { name: "Products", query: { q: trimmed } };
 
   const cur = router.currentRoute.value;
   const sameRoute =

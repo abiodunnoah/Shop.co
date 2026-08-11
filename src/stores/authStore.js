@@ -15,15 +15,19 @@ export const useAuthStore = defineStore("auth", {
     user: null,
     _authReady: false,
     _authReadyPromise: null,
+    _cartSyncedUid: null,
+    _pendingMerge: false,
   }),
   actions: {
     async register(email, password) {
+      this._pendingMerge = true;
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       this.user = userCredential.user;
       return userCredential;
     },
 
     async login(email, password) {
+      this._pendingMerge = true;
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       this.user = userCredential.user;
       return userCredential;
@@ -31,6 +35,7 @@ export const useAuthStore = defineStore("auth", {
 
     async logout() {
       const cart = useCartStore();
+      cart.stopAutoSave();
 
       try {
         await signOut(auth);
@@ -61,8 +66,29 @@ export const useAuthStore = defineStore("auth", {
       }
 
       this._authReadyPromise = new Promise((resolve) => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, (user) => {
+          const cart = useCartStore();
           this.user = user;
+
+          if (user) {
+            const uid = user.uid;
+            if (this._cartSyncedUid !== uid) {
+              this._cartSyncedUid = uid;
+              const mergeLocal = this._pendingMerge;
+              this._pendingMerge = false;
+
+              cart.stopAutoSave();
+              cart
+                .loadFromServer(uid, { mergeLocal })
+                .then(() => cart.startAutoSave(uid))
+                .catch(() => cart.startAutoSave(uid));
+            }
+          } else {
+            this._cartSyncedUid = null;
+            this._pendingMerge = false;
+            cart.stopAutoSave();
+          }
+
           if (!this._authReady) {
             this._authReady = true;
             resolve();

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { fmtNaira } from "@/utils/currency";
 import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
 
@@ -80,9 +81,9 @@ function goHome() {
               <img v-if="it.image" :src="it.image" alt="" class="w-12 h-12 object-cover rounded" />
               <div class="flex-1">
                 <div class="font-medium">{{ it.name }}</div>
-                <div class="text-xs text-gray-600">Qty: {{ it.quantity }} · ₦{{ it.price }}</div>
+                <div class="text-xs text-gray-600">Qty: {{ it.quantity }} · {{ fmtNaira(it.price) }}</div>
               </div>
-              <div class="font-semibold">₦{{ it.subtotal }}</div>
+              <div class="font-semibold">{{ fmtNaira(it.subtotal) }}</div>
             </li>
           </ul>
         </div>
@@ -90,15 +91,19 @@ function goHome() {
         <div class="mt-3 border-t pt-3">
           <div class="flex justify-between text-sm">
             <span>Subtotal</span>
-            <span>₦{{ order.subtotal }}</span>
+            <span>{{ fmtNaira(order.subtotal) }}</span>
+          </div>
+          <div v-if="order.discount > 0" class="flex justify-between text-sm">
+            <span>Discount</span>
+            <span>- {{ fmtNaira(order.discount) }}</span>
           </div>
           <div class="flex justify-between text-sm">
             <span>Shipping</span>
-            <span>₦{{ order.shipping }}</span>
+            <span>{{ fmtNaira(order.shipping) }}</span>
           </div>
           <div class="flex justify-between text-sm font-bold">
             <span>Total</span>
-            <span>₦{{ order.amount }}</span>
+            <span>{{ fmtNaira(order.amount) }}</span>
           </div>
         </div>
 

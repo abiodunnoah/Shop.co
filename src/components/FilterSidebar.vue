@@ -4,8 +4,8 @@ import FilterIcon from "@/assets/icons/FilterIcon.png";
 import Collapsible from "./CollapsibleView.vue";
 
 const price = ref({
-  min: 50,
-  max: 200,
+  min: 0,
+  max: 50000,
 });
 const colorOptions = [
   "green",
@@ -22,9 +22,10 @@ const colorOptions = [
 const sizeOptions = ["XX-Small", "X-Small", "Small", "Medium", "Large", "X-Large", "XX-Large"];
 
 const size = ref(null);
+const selectedColor = ref(null);
 
 function captureFilters() {
-  return { price: price.value, color: null, size: size.value };
+  return { price: price.value, color: selectedColor.value, size: size.value };
 }
 </script>
 
@@ -49,16 +50,22 @@ function captureFilters() {
     <!-- Price Slider -->
     <Collapsible title="Price">
       <div class="price-range">
-        <input type="range" min="0" max="500" step="10" v-model="price.min" />
-        <input type="range" min="0" max="500" step="10" v-model="price.max" />
-        <div>${{ price.min }} - ${{ price.max }}</div>
+        <input type="range" min="0" max="50000" step="1000" v-model="price.min" />
+        <input type="range" min="0" max="50000" step="1000" v-model="price.max" />
+        <div>₦{{ price.min }} - ₦{{ price.max }}</div>
       </div>
     </Collapsible>
 
     <!-- colors -->
     <Collapsible title="Colors">
       <div class="colors">
-        <button v-for="color in colorOptions" :key="color" :style="{ background: color }"></button>
+        <button
+          v-for="color in colorOptions"
+          :key="color"
+          :style="{ background: color }"
+          disabled
+          aria-disabled="true"
+        ></button>
       </div>
     </Collapsible>
 
@@ -66,12 +73,13 @@ function captureFilters() {
     <Collapsible title="Size">
       <div class="sizes">
         <button
-          v-for="size in sizeOptions"
-          :key="size"
-          :class="{ selected: size === size }"
-          @click="size = size"
+          v-for="option in sizeOptions"
+          :key="option"
+          :class="{ selected: option === size }"
+          @click="size = option"
+          disabled
         >
-          {{ size }}
+          {{ option }}
         </button>
       </div>
     </Collapsible>
@@ -90,7 +98,7 @@ function captureFilters() {
   </aside>
 </template>
 
-<style scope>
+<style scoped>
 .sidebar {
   background: #fff;
   border: 1px solid #ddd;
@@ -135,6 +143,11 @@ function captureFilters() {
   cursor: pointer;
 }
 
+.colors button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .sizes button {
   margin: 0.25rem;
   padding: 0.5rem 1rem;
@@ -142,6 +155,11 @@ function captureFilters() {
   border-radius: 9999rem;
   background: #f0f0f0;
   cursor: pointer;
+}
+
+.sizes button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .sizes button.selected {
