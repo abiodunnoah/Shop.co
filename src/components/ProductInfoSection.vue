@@ -91,8 +91,10 @@ function emitAddToCart() {
     <TabPanel :tabs="['Product Details', 'Rating & Reviews', 'FAQs']" v-model:active="activeTab">
       <TabContentSection
         :product="product"
+        :product-id="product.id"
         :active-tab="activeTab"
         :sort-order="sortOrder"
+        @write-review="emit('write-review')"
         @load-more="emit('load-more-reviews')"
       />
     </TabPanel>

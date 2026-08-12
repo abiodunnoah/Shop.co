@@ -4,9 +4,11 @@ import DescriptionCard from "@/components/DescriptionCard.vue";
 import CustomerReviewCard from "@/components/CustomerReviewCard.vue";
 import FaqCard from "@/components/FaqCard.vue";
 import FilterIcon from "@/assets/icons/FilterIcon.png";
+import { useReviewsStore } from "@/stores/reviewsStore";
 
 const props = defineProps({
   product: { type: Object, required: true },
+  productId: { type: [String, Number], default: null },
   activeTab: { type: Number, required: true },
   sortOrder: { type: String, required: true },
 });
@@ -14,17 +16,37 @@ const props = defineProps({
 const emit = defineEmits(["update:sortOrder", "write-review", "load-more"]);
 const localSort = ref(props.sortOrder);
 
+const reviews = useReviewsStore();
+
 watch(
   () => props.sortOrder,
   (v) => (localSort.value = v)
 );
 
+watch(
+  () => props.productId,
+  (id) => reviews.resetProduct(String(id)),
+  { immediate: true }
+);
+
+const mergedReviews = computed(() =>
+  reviews.mergedWith(String(props.productId), props.product.reviews)
+);
+
 const sortedReviews = computed(() => {
-  const arr = [...props.product.reviews];
+  const arr = [...mergedReviews.value];
   if (props.sortOrder === "highest") return arr.sort((a, b) => b.rating - a.rating);
   if (props.sortOrder === "lowest") return arr.sort((a, b) => a.rating - b.rating);
   return arr.sort((a, b) => new Date(b.date) - new Date(a.date));
 });
+
+const visibleReviews = computed(() =>
+  sortedReviews.value.slice(0, reviews.visibleCount(String(props.productId)))
+);
+
+const hasMore = computed(
+  () => visibleReviews.value.length < sortedReviews.value.length
+);
 
 function onSortChange() {
   emit("update:sortOrder", localSort.value);
@@ -50,7 +72,7 @@ function OnLoadMore() {
     <div v-else-if="activeTab === 1">
       <div class="reviews-header">
         <h2 class="reviews-title">
-          All Reviews <span class="review-count">({{ product.reviews.length }})</span>
+          All Reviews <span class="review-count">({{ sortedReviews.length }})</span>
         </h2>
         <div class="reviews-controls">
           <button class="btn-icon" @click="$emit('filter')" aria-label="Filter reviews">
@@ -66,9 +88,9 @@ function OnLoadMore() {
       </div>
 
       <div class="reviews-grid">
-        <CustomerReviewCard v-for="r in sortedReviews" :key="r.id" :review="r" />
+        <CustomerReviewCard v-for="r in visibleReviews" :key="r.id" :review="r" />
       </div>
-      <button class="load-more" @click="OnLoadMore">Load More Reviews</button>
+      <button v-if="hasMore" class="load-more" @click="OnLoadMore">Load More Reviews</button>
     </div>
 
     <!-- FAQs -->

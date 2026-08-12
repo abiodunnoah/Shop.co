@@ -2,33 +2,58 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { fmtNaira } from "@/utils/currency";
+import { db } from "@/firebase/config";
+import { doc, getDoc } from "firebase/firestore";
+import { useAuthStore } from "@/stores/authStore";
 import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
 
 const route = useRoute();
 const router = useRouter();
+const auth = useAuthStore();
 
 const reference = ref(route.query.ref || null);
 const order = ref(null);
 const ordersList = ref([]);
 
-onMounted(() => {
+async function readOrdersFromLocal() {
   try {
     const raw = localStorage.getItem("orders");
     const parsed = raw ? JSON.parse(raw) : [];
-    ordersList.value = Array.isArray(parsed) ? parsed : [];
-
-    if (reference.value) {
-      order.value = ordersList.value.find((o) => o.reference === reference.value) || null;
-    }
-
-    if (!order.value && ordersList.value.length > 0) {
-      order.value = ordersList.value[0];
-      reference.value = order.value.reference;
-    }
+    return Array.isArray(parsed) ? parsed : [];
   } catch (err) {
     console.warn("Failed to read orders from localStorage:", err);
-    order.value = null;
+    return [];
+  }
+}
+
+async function findOrderFromServer(refId) {
+  const uid = auth.user?.uid;
+  if (!uid || !refId) return null;
+  try {
+    const orderRef = doc(db, "users", uid, "orders", refId);
+    const snap = await getDoc(orderRef);
+    if (snap.exists()) return snap.data();
+  } catch (err) {
+    console.warn("Failed to read order from Firestore:", err);
+  }
+  return null;
+}
+
+onMounted(async () => {
+  ordersList.value = await readOrdersFromLocal();
+
+  if (reference.value) {
+    order.value = (await findOrderFromServer(reference.value)) || null;
+
+    if (!order.value) {
+      order.value = ordersList.value.find((o) => o.reference === reference.value) || null;
+    }
+  }
+
+  if (!order.value && ordersList.value.length > 0) {
+    order.value = ordersList.value[0];
+    reference.value = order.value.reference;
   }
 });
 

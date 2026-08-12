@@ -1,15 +1,18 @@
 <script setup>
 import productDetail from "@/data/productDetail";
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { useMessage } from "naive-ui";
 import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
 import ProductInfoSection from "@/components/ProductInfoSection.vue";
 import MightLike from "@/components/MightLike.vue";
 import FooterView from "@/components/FooterView.vue";
+import ReviewForm from "@/components/ReviewForm.vue";
 import { useCartStore } from "@/stores/cartStore";
+import { useReviewsStore } from "@/stores/reviewsStore";
 
 const cart = useCartStore();
+const reviews = useReviewsStore();
 const message = useMessage();
 
 const props = defineProps({
@@ -25,6 +28,17 @@ const pd = computed(() => {
   return found;
 });
 
+const showReviewForm = ref(false);
+
+watch(
+  () => pd.value?.id,
+  (id) => {
+    if (id != null) reviews.resetProduct(String(id));
+    showReviewForm.value = false;
+  },
+  { immediate: true }
+);
+
 function onAddToCart({ size, color, quantity }) {
   const productSnapshot = {
     id: pd.value.id,
@@ -37,11 +51,17 @@ function onAddToCart({ size, color, quantity }) {
 }
 
 function onWriteReview() {
-  console.log("Open review form");
+  showReviewForm.value = true;
+}
+
+function onSubmitReview({ author, rating, text }) {
+  reviews.addReview(String(pd.value.id), { author, rating, text });
+  showReviewForm.value = false;
+  message.success("Thanks for your review!");
 }
 
 function onLoadMoreReviews() {
-  console.log("Load more reviews");
+  if (pd.value) reviews.increaseVisible(String(pd.value.id));
 }
 </script>
 
@@ -72,6 +92,7 @@ function onLoadMoreReviews() {
     </template>
     <MightLike :current-id="pd.id" />
   </main>
+  <ReviewForm :show="showReviewForm" @submit="onSubmitReview" @close="showReviewForm = false" />
   <FooterView />
 </template>
 

@@ -5,6 +5,8 @@ import { useCartStore } from "@/stores/cartStore";
 import { useAuthStore } from "@/stores/authStore";
 import { DELIVERY_FEE } from "@/data/shipping";
 import { fmtNaira } from "@/utils/currency";
+import { db } from "@/firebase/config";
+import { setDoc, doc } from "firebase/firestore";
 
 import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
@@ -140,6 +142,17 @@ function saveOrderToLocalOrder(order) {
   }
 }
 
+async function saveOrderToServer(order) {
+  const uid = auth.user?.uid;
+  if (!uid) return;
+  try {
+    const orderRef = doc(db, "users", uid, "orders", order.reference);
+    await setDoc(orderRef, order);
+  } catch (err) {
+    console.warn("Saving order to Firestore failed:", err);
+  }
+}
+
 async function onPay() {
   formError.value = "";
   info.value = "";
@@ -192,12 +205,13 @@ async function onPay() {
         if (paidRef) return;
         formError.value = "Payment window closed before completing payment.";
       },
-      callback: function (response) {
+      callback: async function (response) {
         const reference = response?.reference || refBefore;
         paidRef = reference;
         const lastorder = buildOrderObject(reference);
 
         saveOrderToLocalOrder(lastorder);
+        await saveOrderToServer(lastorder);
 
         try {
           cart.clearCart();
