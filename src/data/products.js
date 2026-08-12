@@ -1,19 +1,19 @@
-﻿import cloth1 from "@/assets/images/cloth 1.png";
-import cloth2 from "@/assets/images/cloth 2.png";
-import cloth3 from "@/assets/images/cloth 3.png";
-import cloth4 from "@/assets/images/cloth 4.png";
-import cloth5 from "@/assets/images/cloth 5.png";
-import cloth6 from "@/assets/images/cloth 6.png";
-import cloth7 from "@/assets/images/cloth 7.png";
-import cloth8 from "@/assets/images/cloth 8.png";
-import blackStriped from "@/assets/images/Polo with Contrast Trims.png";
-import poloWthContrastTrims from "@/assets/images/Gradient Graphic T-shirt.png";
-import poloWithTipping from "@/assets/images/Polo with Tipping Details.png";
-import gradientGraphicTshirt from "@/assets/images/Black Striped T-shirt.png";
-import tsFront from "@/assets/images/ts-front.png";
-import relaxedOversizedTee from "@/assets/images/Relaxed Oversized Tee.jpeg";
-import stripedSummerPolo from "@/assets/images/Striped Summer Polo.jpg";
-import denimOvershirt from "@/assets/images/Denim Overshirt.jpeg";
+import cloth1 from "@/assets/images/cloth 1.webp";
+import cloth2 from "@/assets/images/cloth 2.webp";
+import cloth3 from "@/assets/images/cloth 3.webp";
+import cloth4 from "@/assets/images/cloth 4.webp";
+import cloth5 from "@/assets/images/cloth 5.webp";
+import cloth6 from "@/assets/images/cloth 6.webp";
+import cloth7 from "@/assets/images/cloth 7.webp";
+import cloth8 from "@/assets/images/cloth 8.webp";
+import blackStriped from "@/assets/images/Polo with Contrast Trims.webp";
+import poloWthContrastTrims from "@/assets/images/Gradient Graphic T-shirt.webp";
+import poloWithTipping from "@/assets/images/Polo with Tipping Details.webp";
+import gradientGraphicTshirt from "@/assets/images/Black Striped T-shirt.webp";
+import tsFront from "@/assets/images/ts-front.webp";
+import relaxedOversizedTee from "@/assets/images/Relaxed Oversized Tee.webp";
+import stripedSummerPolo from "@/assets/images/Striped Summer Polo.webp";
+import denimOvershirt from "@/assets/images/Denim Overshirt.webp";
 
 export default [
   {

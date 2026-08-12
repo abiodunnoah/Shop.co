@@ -1,7 +1,7 @@
 <script setup>
 import StarIconSmall from "@/assets/icons/StarIconSmall.png";
 import StarIconBig from "@/assets/icons/StarIconBig.png";
-import HeaderImage from "@/assets/images/Image.jpg";
+import HeaderImage from "@/assets/images/Image.webp";
 </script>
 
 <template>

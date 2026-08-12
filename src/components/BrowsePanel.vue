@@ -1,8 +1,8 @@
 <script setup>
-import casual from "@/assets/images/casual.png";
-import formal from "@/assets/images/formal.png";
-import party from "@/assets/images/party.png";
-import gym from "@/assets/images/gym.png";
+import casual from "@/assets/images/casual.webp";
+import formal from "@/assets/images/formal.webp";
+import party from "@/assets/images/party.webp";
+import gym from "@/assets/images/gym.webp";
 </script>
 
 <template>

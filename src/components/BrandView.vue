@@ -1,9 +1,9 @@
 <script setup>
-import Versace from "@/assets/images/versace.png";
-import Gucci from "@/assets/images/gucci.png";
-import Prada from "@/assets/images/prada.png";
-import Zara from "@/assets/images/zara.png";
-import Calvin from "@/assets/images/calvin.png";
+import Versace from "@/assets/images/versace.webp";
+import Gucci from "@/assets/images/gucci.webp";
+import Prada from "@/assets/images/prada.webp";
+import Zara from "@/assets/images/zara.webp";
+import Calvin from "@/assets/images/calvin.webp";
 </script>
 
 <template>

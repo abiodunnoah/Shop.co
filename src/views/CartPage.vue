@@ -1,4 +1,4 @@
-﻿<script setup>
+<script setup>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "@/stores/cartStore";
@@ -8,9 +8,9 @@ import SignupBonus from "@/components/SignupBonus.vue";
 import NavBar from "@/components/NavBar.vue";
 
 // demo images
-import img1 from "@/assets/images/cloth 1.png";
-import img2 from "@/assets/images/cloth 2.png";
-import img3 from "@/assets/images/cloth 3.png";
+import img1 from "@/assets/images/cloth 1.webp";
+import img2 from "@/assets/images/cloth 2.webp";
+import img3 from "@/assets/images/cloth 3.webp";
 
 const router = useRouter();
 const cart = useCartStore();
